@@ -12,12 +12,8 @@ import java.util.List;
  */
 public interface OrderDaoInterface {
     public boolean Add(OrderBean order);
-
     public boolean Update(OrderBean order);
-
-    public boolean Delete(String ID);
-
-    public OrderBean ListByOrderID(String ID);
-
-    public List<String> ListAllOrderID();
+    public boolean Delete(int ID);
+    public OrderBean ListByOrderID(int ID);
+    public List<Integer> ListAllOrderID();
 }

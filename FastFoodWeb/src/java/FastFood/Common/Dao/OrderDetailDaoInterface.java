@@ -11,9 +11,9 @@ import java.util.List;
  * @author bao
  */
 public interface OrderDetailDaoInterface {
-public boolean Add(OrderDetailBean orderDetail);
+    public boolean Add(OrderDetailBean orderDetail);
     public boolean Update(OrderDetailBean orderDetail);
-    public boolean Delete(OrderDetailBean orderDetailID);
-    public OrderDetailBean ListByOrderDetailID(OrderDetailBean orderDetailID);
-    public List<String> ListAllOrderDetailID();
+    public boolean Delete(int orderID, int productID);
+    public OrderDetailBean ListByOrderDetailID(int orderID, int productID);
+    public List<Integer> ListAllOrderID();
 }

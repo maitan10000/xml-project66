@@ -12,9 +12,9 @@ import java.util.List;
  * @author bao
  */
 public interface CategoryDaoInterface {
-     public boolean Add(String Name);
-    public boolean Update(String Name);
-    public boolean Delete(String ID);
-    public CategoryBean ListByCatID(String ID);
-    public List<String> ListAllCatID();
+    public boolean Add(String Name);
+    public boolean Update(CategoryBean cate);
+    public boolean Delete(int ID);
+    public CategoryBean ListByCatID(int ID);
+    public List<Integer> ListAllCatID();
 }

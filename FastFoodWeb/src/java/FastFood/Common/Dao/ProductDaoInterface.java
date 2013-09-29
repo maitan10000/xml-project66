@@ -13,7 +13,8 @@ import java.util.List;
 public interface ProductDaoInterface {
     public boolean Add(ProductBean product);
     public boolean Update(ProductBean product);
-    public boolean Delete(String ID);
-    public ProductBean ListByProductID(String ID);
-    public List<String> ListAllProductID();
+    public boolean Delete(int ID);
+    public ProductBean ListByProductID(int ID);
+    public List<Integer> ListAllProductID();
+    public List<Integer> ListByCatID();
 }
