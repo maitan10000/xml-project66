@@ -4,9 +4,17 @@
         <servlet-name>TestController</servlet-name>
         <servlet-class>Controller.TestUserDaoController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>TestOrderDaoCotroller</servlet-name>
+        <servlet-class>Controller.TestOrderDaoCotroller</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>TestController</servlet-name>
         <url-pattern>/TestController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TestOrderDaoCotroller</servlet-name>
+        <url-pattern>/TestOrderDaoCotroller</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

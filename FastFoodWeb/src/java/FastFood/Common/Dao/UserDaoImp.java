@@ -53,6 +53,7 @@ public class UserDaoImp implements UserDaoInterface {
                     pst.close();
                 }
             } catch (Exception e) {
+                e.printStackTrace();
             }
 
             try {

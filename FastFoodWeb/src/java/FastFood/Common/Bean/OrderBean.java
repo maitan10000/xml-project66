@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package FastFood.Common.Bean;
 
 import java.sql.Date;
@@ -12,6 +11,7 @@ import java.sql.Date;
  * @author bao
  */
 public class OrderBean {
+
     private int ID;
     private String BuyerName;
     private String Creator;
@@ -21,13 +21,16 @@ public class OrderBean {
     private Date CreateDate;
     private boolean IsActive;
 
+    public OrderBean() {
+    }
+
     public OrderBean(int ID, String BuyerName, String Creator, String Status, String Notes, String ReceiveAddress, Date CreateDate, boolean IsActive) {
         this.ID = ID;
         this.BuyerName = BuyerName;
         this.Creator = Creator;
         this.Status = Status;
         this.Notes = Notes;
-        this.ReceiveAddress= ReceiveAddress;
+        this.ReceiveAddress = ReceiveAddress;
         this.CreateDate = CreateDate;
         this.IsActive = IsActive;
     }
@@ -95,5 +98,4 @@ public class OrderBean {
     public void setStatus(String Status) {
         this.Status = Status;
     }
-
 }

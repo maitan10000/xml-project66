@@ -16,5 +16,6 @@
     <body>
         <h1>Hello World!</h1>
         <a href="TestUserDaoController">Test link</a>
+        <a href="TestOrderDaoCotroller">Test Order Link</a>
     </body>
 </html>

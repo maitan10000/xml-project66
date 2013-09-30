@@ -28,4 +28,12 @@ public class FastFoodContants {
     final static public String ROLE = "Role";
     final static public String CREATE_DATE = "CreateDate";
     final static public String IS_ACTIVE = "IsActive";
+
+    /* OrderDao */
+    final static public String ORDER_ID = "ID";
+    final static public String BUYER_NAME = "BuyerName";
+    final static public String CREATOR = "Creator";
+    final static public String STATUS = "Status";
+    final static public String NOTES = "Notes";
+    final static public String RECEIVE_ADDRESS = "ReceiveAddress";
 }
