@@ -95,6 +95,7 @@ public class UserDaoImp implements UserDaoInterface {
                     pst.close();
                 }
             } catch (Exception e) {
+                e.printStackTrace();
             }
 
             try {
@@ -114,7 +115,7 @@ public class UserDaoImp implements UserDaoInterface {
         PreparedStatement pst = null;
         try {
             conn = DBUtility.makeConnection();
-            String query = "DELETE [User] WHERE UserName=?";
+            String query = "UPDATE [User] SET IsActive= 'false' WHERE UserName=?";
             pst = conn.prepareStatement(query);
             pst.setString(1, UserName);
 
@@ -127,6 +128,7 @@ public class UserDaoImp implements UserDaoInterface {
                     pst.close();
                 }
             } catch (Exception e) {
+                e.printStackTrace();
             }
 
             try {
@@ -175,6 +177,7 @@ public class UserDaoImp implements UserDaoInterface {
                     pst.close();
                 }
             } catch (Exception e) {
+                e.printStackTrace();
             }
 
             try {
@@ -213,6 +216,7 @@ public class UserDaoImp implements UserDaoInterface {
                     pst.close();
                 }
             } catch (Exception e) {
+                e.printStackTrace();
             }
 
             try {
