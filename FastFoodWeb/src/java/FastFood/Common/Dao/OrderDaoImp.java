@@ -146,7 +146,7 @@ public class OrderDaoImp implements OrderDaoInterface {
             pst.setInt(1, ID);
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
-                int id = rs.getInt(FastFoodContants.ORDER_ID);
+                int id = rs.getInt(FastFoodContants.ID);
                 String buyerName = rs.getString(FastFoodContants.BUYER_NAME);
                 String creator = rs.getString(FastFoodContants.CREATOR);
                 String status = rs.getString(FastFoodContants.STATUS);
@@ -198,7 +198,7 @@ public class OrderDaoImp implements OrderDaoInterface {
             pst = conn.prepareStatement(query);
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
-                int id = rs.getInt(FastFoodContants.ORDER_ID);
+                int id = rs.getInt(FastFoodContants.ID);
                 result.add(id);
             }
             return result;
@@ -236,7 +236,7 @@ public class OrderDaoImp implements OrderDaoInterface {
             pst.setString(1, BuyerName);
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
-                int id = rs.getInt(FastFoodContants.ORDER_ID);
+                int id = rs.getInt(FastFoodContants.ID);
                 result.add(id);
             }
             return result;
@@ -274,7 +274,7 @@ public class OrderDaoImp implements OrderDaoInterface {
             pst.setString(1, Creator);
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
-                int id = rs.getInt(FastFoodContants.ORDER_ID);
+                int id = rs.getInt(FastFoodContants.ID);
                 result.add(id);
             }
             return result;

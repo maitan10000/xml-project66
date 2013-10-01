@@ -5,12 +5,36 @@
         <servlet-class>Controller.TestUserDaoController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>TestCategoryDaoController</servlet-name>
+        <servlet-class>Controller.TestCategoryDaoController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TestProductDaoController</servlet-name>
+        <servlet-class>Controller.TestProductDaoController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TestOrderDetailDaoController</servlet-name>
+        <servlet-class>Controller.TestOrderDetailDaoController</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>TestOrderDaoCotroller</servlet-name>
         <servlet-class>Controller.TestOrderDaoCotroller</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>TestController</servlet-name>
         <url-pattern>/TestController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TestCategoryDaoController</servlet-name>
+        <url-pattern>/TestCategoryDaoController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TestProductDaoController</servlet-name>
+        <url-pattern>/TestProductDaoController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TestOrderDetailDaoController</servlet-name>
+        <url-pattern>/TestOrderDetailDaoController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>TestOrderDaoCotroller</servlet-name>

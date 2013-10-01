@@ -12,6 +12,7 @@ import java.util.List;
  * @author bao
  */
 public interface CategoryDaoInterface {
+
     public boolean Add(String Name);
     public boolean Update(CategoryBean cate);
     public boolean Delete(int ID);

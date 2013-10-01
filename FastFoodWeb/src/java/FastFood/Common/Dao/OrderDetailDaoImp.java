@@ -4,46 +4,34 @@
  */
 package FastFood.Common.Dao;
 
-import FastFood.Common.Bean.UserBean;
+import FastFood.Common.Bean.OrderDetailBean;
 import FastFood.Common.Constants.FastFoodContants;
 import FastFood.Common.Utility.DBUtility;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
- * @author Everything
+ * @author bao
  */
-public class UserDaoImp implements UserDaoInterface {
+public class OrderDetailDaoImp implements OrderDetailDaoInterface {
 
     @Override
-    public boolean Add(UserBean user) {
+    public boolean Add(OrderDetailBean orderDetail) {
         Connection conn = null;
         PreparedStatement pst = null;
         try {
             conn = DBUtility.makeConnection();
-            String query = "INSERT INTO [User] VALUES(?,?,?,?,?,?,?,?,?,?)";
+            String query = "INSERT INTO OrderDetail VALUES(?,?,?,?,?)";
             pst = conn.prepareStatement(query);
-            pst.setString(1, user.getUserName());
-            pst.setString(2, user.getPassword());
-            pst.setString(3, user.getFirstName());
-            pst.setString(4, user.getLastName());
-            pst.setString(5, user.getEmail());
-            pst.setString(6, user.getAddress());
-            pst.setString(7, user.getPhone());
-            pst.setString(8, "Customer");
-
-            Date todayD = new Date(System.currentTimeMillis());
-            SimpleDateFormat dayFormat = new SimpleDateFormat("yyyy/MM/dd");
-            String todayS = dayFormat.format(todayD);
-            pst.setString(9, todayS);
-
-            pst.setString(10, "true");
+            pst.setInt(1, orderDetail.getOrderID());
+            pst.setInt(2, orderDetail.getProductID());
+            pst.setInt(3, orderDetail.getPrice());
+            pst.setInt(4, orderDetail.getQuantity());
+            pst.setString(5, "true");
             return pst.executeUpdate() > 0;//return result
         } catch (Exception e) {
             e.printStackTrace();
@@ -68,24 +56,18 @@ public class UserDaoImp implements UserDaoInterface {
     }
 
     @Override
-    public boolean Update(UserBean user) {
+    public boolean Update(OrderDetailBean orderDetail) {
         Connection conn = null;
         PreparedStatement pst = null;
         try {
             conn = DBUtility.makeConnection();
-            String query = "UPDATE [User] SET Password=?, FirstName=?, LastName=?,"
-                    + " Email=?,Address=?, Phone=?,[Role]=?,IsActive=? WHERE UserName=?";
+            String query = "UPDATE OrderDetail SET Price=?,Quantity=?,IsActive=? WHERE OrderID=? and ProductID=?";
             pst = conn.prepareStatement(query);
-            pst.setString(1, user.getPassword());
-            pst.setString(2, user.getFirstName());
-            pst.setString(3, user.getLastName());
-            pst.setString(4, user.getEmail());
-            pst.setString(5, user.getAddress());
-            pst.setString(6, user.getPhone());
-            pst.setString(7, user.getRole());
-            pst.setBoolean(8, user.isActive());
-            pst.setString(9, user.getUserName());
 
+            pst.setInt(1, orderDetail.getPrice());
+            pst.setInt(2, orderDetail.getQuantity());
+            pst.setInt(4, orderDetail.getOrderID());
+            pst.setInt(5, orderDetail.getProductID());
             return pst.executeUpdate() > 0;//return result
         } catch (Exception e) {
             e.printStackTrace();
@@ -110,30 +92,30 @@ public class UserDaoImp implements UserDaoInterface {
     }
 
     @Override
-    public boolean Delete(String UserName) {
+    public boolean Delete(int orderID, int productID) {
         Connection conn = null;
         PreparedStatement pst = null;
         try {
             conn = DBUtility.makeConnection();
-            String query = "UPDATE [User] SET IsActive= 'false' WHERE UserName=?";
+            String query = "UPDATE OrderDetail SET IsActive='false' WHERE OrderID=? and ProductID=?";
             pst = conn.prepareStatement(query);
-            pst.setString(1, UserName);
-
-            return pst.executeUpdate() > 0;//return result
+            pst.setInt(1, orderID);
+            pst.setInt(2, productID);
+            return pst.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             try {
-                if (pst != null) {
-                    pst.close();
+                if (conn != null) {
+                    conn.close();
                 }
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
             try {
-                if (conn != null) {
-                    conn.close();
+                if (pst != null) {
+                    pst.close();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -143,31 +125,24 @@ public class UserDaoImp implements UserDaoInterface {
     }
 
     @Override
-    public UserBean ListByUserName(String UserName) {
-        UserBean result = null;
+    public OrderDetailBean ListByOrderDetailID(int orderID, int productID) {
+        OrderDetailBean result = null;
         Connection conn = null;
         PreparedStatement pst = null;
         try {
             conn = DBUtility.makeConnection();
-            String query = "SELECT * FROM [User] WHERE UserName=?";
+            String query = "SELECT * FROM OrderDetail WHERE OrderID=? and ProductID=?";
             pst = conn.prepareStatement(query);
-            pst.setString(1, UserName);
+            pst.setInt(1, orderID);
+            pst.setInt(2, productID);
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
-                String username = rs.getString(FastFoodContants.USER_NAME);
-                String password = rs.getString(FastFoodContants.PASSWORD);
-                String firstname = rs.getString(FastFoodContants.FIRST_NAME);
-                String lastname = rs.getString(FastFoodContants.LAST_NAME);
-                String email = rs.getString(FastFoodContants.EMAIL);
-                String address = rs.getString(FastFoodContants.ADDRESS);
-                String phone = rs.getString(FastFoodContants.PHONE);
-                String role = rs.getString(FastFoodContants.ROLE);
-                Date createDate = rs.getDate(FastFoodContants.CREATE_DATE);
-                boolean isActive = rs.getBoolean(FastFoodContants.IS_ACTIVE);
-
-                result = new UserBean(username, password, firstname,
-                        lastname, email, address, phone, role, createDate, isActive);
-
+                int OrderID = rs.getInt(FastFoodContants.ORDER_ID);
+                int ProductID = rs.getInt(FastFoodContants.PRODUCT_ID);
+                int Price = rs.getInt(FastFoodContants.PRICE);
+                int Quantity = rs.getInt(FastFoodContants.QUANTITY);
+                boolean IsActive = rs.getBoolean(FastFoodContants.IS_ACTIVE);
+                result = new OrderDetailBean(OrderID, ProductID, Price, Quantity, IsActive);
                 return result;
             }
         } catch (Exception e) {
@@ -193,20 +168,22 @@ public class UserDaoImp implements UserDaoInterface {
     }
 
     @Override
-    public List<String> ListAllUserName() {
-        ArrayList<String> result = null;
+    public List<Integer[]> ListAllOrderDetailID() {
+        ArrayList<Integer[]> result = null;
         Connection conn = null;
         PreparedStatement pst = null;
         try {
             conn = DBUtility.makeConnection();
-            String query = "SELECT UserName FROM [User]";
+            String query = "SELECT OrderID, ProductID FROM OrderDetail";
             pst = conn.prepareStatement(query);
 
             ResultSet rs = pst.executeQuery();
-            result = new ArrayList<String>();
+            result = new ArrayList<Integer[]>();
             while (rs.next()) {
-                String username = rs.getString(FastFoodContants.USER_NAME);
-                result.add(username);
+                int OrderID = rs.getInt(FastFoodContants.ORDER_ID);
+                int ProductID = rs.getInt(FastFoodContants.PRODUCT_ID);
+
+                result.add(new Integer[]{OrderID,ProductID});
             }
             return result;
         } catch (Exception e) {
@@ -217,7 +194,7 @@ public class UserDaoImp implements UserDaoInterface {
                     pst.close();
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+            e.printStackTrace();
             }
 
             try {

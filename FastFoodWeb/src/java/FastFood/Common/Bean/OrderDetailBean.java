@@ -16,11 +16,14 @@ public class OrderDetailBean {
     private int Quantity;
     private boolean IsActive;
 
-    public OrderDetailBean(int OrderID, int ProductID, int Price, int Quantity) {
+    public OrderDetailBean(){}
+
+    public OrderDetailBean(int OrderID, int ProductID, int Price, int Quantity, boolean IsActive) {
         this.OrderID = OrderID;
         this.ProductID = ProductID;
         this.Price = Price;
         this.Quantity = Quantity;
+        this.IsActive= IsActive;
     }
     public OrderDetailBean(int OrderID, int ProductID)
     {

@@ -23,6 +23,7 @@ public class ProductBean {
     private Date LastUpdate;
     private boolean IsActive;
 
+
     public ProductBean() {
     }
 

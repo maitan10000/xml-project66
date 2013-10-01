@@ -5,11 +5,13 @@
 
 package Controller;
 
-import FastFood.Common.Bean.UserBean;
-import FastFood.Common.Dao.UserDaoImp;
+import FastFood.Common.Bean.ProductBean;
+import FastFood.Common.Dao.ProductDaoImp;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.Integer;
 import java.util.List;
+import javax.crypto.interfaces.PBEKey;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,9 +19,9 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Everything
+ * @author bao
  */
-public class TestUserDaoController extends HttpServlet {
+public class TestProductDaoController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -33,53 +35,47 @@ public class TestUserDaoController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            UserDaoImp userDaoImp = new UserDaoImp();
+            ProductDaoImp ProductDao = new ProductDaoImp();
 
-            /*Test add*/
-            /*UserBean user = new UserBean();
-            user.setUserName("test4");
-            user.setPassword("123");
-            user.setFirstName("Nguyen Van");
-            user.setLastName("D");
-            user.setEmail("test4@gmail.com");
-            user.setAddress("HCM");
-            user.setPhone("123456789");
+            //Addproduct
+           /* ProductBean pb = new ProductBean();
+            pb.setName("GANUONG");
+            pb.setPrice(50000);
+            pb.setCateID(2);
+            pb.setDescription("asdasfwa");
+            pb.setImage("asfasf");
+            pdi.Add(pb); */
 
-            userDaoImp.Add(user);*/
-
-            /*UserBean user = new UserBean();
-            user.setUserName("test4");
-            user.setPassword("123");
-            user.setFirstName("Nguyen Van");
-            user.setLastName("D");
-            user.setEmail("test4@gmail.com");
-            user.setAddress("Ha Noi");
-            user.setPhone("123456789");
-            user.setRole("admin");
-            user.setActive(true);
-            userDaoImp.Update(user);*/
-
-            //userDaoImp.Delete("test4");
-
-            /*UserBean user = userDaoImp.ListByUserName("admin1");
-            System.out.println(user.getUserName());
-            System.out.println(user.getPassword());
-            System.out.println(user.getFirstName());
-            System.out.println(user.getLastName());
-            System.out.println(user.getAddress());
-            System.out.println(user.getPhone());
-            System.out.println(user.getRole());
-            System.out.println(user.getCreateDate());
-            System.out.println(user.isActive());*/
-
-            List<String> listUser = userDaoImp.ListAllUserName();
-            for(int i = 0; i < listUser.size();i++)
-            {
-                System.out.println(listUser.get(i));
-            }
-
-
+            //UpdateProduct
+           /* ProductBean pb1 = new ProductBean();
+            pb1.setID(4);
+            pb1.setName("GAluoc");
+            pb1.setCateID(1);
+            pb1.setImage("safaaa");
+            pb1.setDescription("312");
+            pb1.setBuyCount(8);
+            pdi.Update(pb1); */
             
+            //DeleteProduct
+            //pdi.Delete(5);
+
+            //ListbyId
+
+          /*  ProductBean pb3 = ProductDao.ListByProductID(3);
+            System.out.println(pb3.getID());
+            System.out.println(pb3.getName());
+            System.out.println(pb3.getPrice());
+            System.out.println(pb3.getLastUpdate());
+            System.out.println(pb3.getCateID()); */
+
+
+           // ListAllID
+
+           /*  List<Integer> list = ProductDao.ListAllProductID();
+            for(int i=0; i<list.size(); i++){
+                System.out.println(list.get(i));
+            }*/
+
         } finally { 
             out.close();
         }

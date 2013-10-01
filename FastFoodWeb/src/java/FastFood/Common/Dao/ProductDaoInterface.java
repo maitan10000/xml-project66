@@ -16,5 +16,5 @@ public interface ProductDaoInterface {
     public boolean Delete(int ID);
     public ProductBean ListByProductID(int ID);
     public List<Integer> ListAllProductID();
-    public List<Integer> ListByCatID();
+    public List<Integer> ListByCatID(int ID);
 }

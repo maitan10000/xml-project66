@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package FastFood.Common.Bean;
 
 /**
@@ -10,7 +9,13 @@ package FastFood.Common.Bean;
  * @author bao
  */
 public class CategoryBean {
+
     private int ID;
+    private String Name;
+    private boolean IsActive;
+
+    public CategoryBean() {
+    }
 
     public CategoryBean(int ID, String Name, boolean IsActive) {
         this.ID = ID;
@@ -41,6 +46,4 @@ public class CategoryBean {
     public void setName(String Name) {
         this.Name = Name;
     }
-    private String Name;
-    private boolean IsActive;
 }

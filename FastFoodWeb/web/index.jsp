@@ -16,6 +16,9 @@
     <body>
         <h1>Hello World!</h1>
         <a href="TestUserDaoController">Test link</a>
+        <a href="TestCategoryDaoController">Test category</a>
+        <a href="TestOrderDetailDaoController">Test OrderDetail</a>
+        <a href="TestProductDaoController">Test Product</a>
         <a href="TestOrderDaoCotroller">Test Order Link</a>
     </body>
 </html>

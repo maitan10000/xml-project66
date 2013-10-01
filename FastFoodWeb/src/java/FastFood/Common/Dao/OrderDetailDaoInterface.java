@@ -15,5 +15,5 @@ public interface OrderDetailDaoInterface {
     public boolean Update(OrderDetailBean orderDetail);
     public boolean Delete(int orderID, int productID);
     public OrderDetailBean ListByOrderDetailID(int orderID, int productID);
-    public List<Integer> ListAllOrderID();
+    public List<Integer[]> ListAllOrderDetailID();
 }
