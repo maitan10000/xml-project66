@@ -182,12 +182,14 @@ public class CategoryDaoImp implements CategoryDaoInterface {
                     conn.close();
                 }
             } catch (Exception e) {
+                e.printStackTrace();
             }
             try {
                 if (pst != null) {
                     pst.close();
                 }
             } catch (Exception e) {
+                e.printStackTrace();
             }
         }
         return null;
