@@ -58,7 +58,7 @@ public class TestProductDaoController extends HttpServlet {
             
             //DeleteProduct
             //pdi.Delete(5);
-
+            //asa
             //ListbyId
 
           /*  ProductBean pb3 = ProductDao.ListByProductID(3);
