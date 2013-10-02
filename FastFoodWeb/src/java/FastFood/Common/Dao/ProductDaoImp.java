@@ -167,7 +167,8 @@ public class ProductDaoImp implements ProductDaoInterface {
                 Date LastUpdate = rs.getDate(FastFoodContants.lAST_UPDATE);
                 boolean IsActive = rs.getBoolean(FastFoodContants.IS_ACTIVE);
 
-                result = new ProductBean(ProductID, Name, Price, Image, Description, CateID, BuyCount, CreateDate, LastUpdate, IsActive);
+                result = new ProductBean(ProductID, Name, Price, Image, Description,
+                        CateID, BuyCount, CreateDate, LastUpdate, IsActive);
                 return result;
             }
         } catch (Exception e) {

@@ -61,7 +61,8 @@ public class OrderDetailDaoImp implements OrderDetailDaoInterface {
         PreparedStatement pst = null;
         try {
             conn = DBUtility.makeConnection();
-            String query = "UPDATE OrderDetail SET Price=?,Quantity=?,IsActive=? WHERE OrderID=? and ProductID=?";
+            String query = "UPDATE OrderDetail SET Price=?,Quantity=?,"
+                    + "IsActive=? WHERE OrderID=? and ProductID=?";
             pst = conn.prepareStatement(query);
 
             pst.setInt(1, orderDetail.getPrice());
@@ -97,7 +98,8 @@ public class OrderDetailDaoImp implements OrderDetailDaoInterface {
         PreparedStatement pst = null;
         try {
             conn = DBUtility.makeConnection();
-            String query = "UPDATE OrderDetail SET IsActive='false' WHERE OrderID=? and ProductID=?";
+            String query = "UPDATE OrderDetail SET IsActive='false'"
+                    + " WHERE OrderID=? and ProductID=?";
             pst = conn.prepareStatement(query);
             pst.setInt(1, orderID);
             pst.setInt(2, productID);

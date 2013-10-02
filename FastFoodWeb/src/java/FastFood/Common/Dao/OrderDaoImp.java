@@ -28,7 +28,8 @@ public class OrderDaoImp implements OrderDaoInterface {
         PreparedStatement pst = null;
         try {
             conn = DBUtility.makeConnection();
-            String query = "INSERT INTO [Order](BuyerName, Creator, Status, Notes, ReceiveAddress, CreateDate, IsActive)"
+            String query = "INSERT INTO [Order](BuyerName, Creator, Status, Notes,"
+                    + " ReceiveAddress, CreateDate, IsActive)"
                     + "VALUES(?,?, ?, ?, ?, ?, ?)";
             pst = conn.prepareStatement(query);
             pst.setString(1, order.getBuyerName());

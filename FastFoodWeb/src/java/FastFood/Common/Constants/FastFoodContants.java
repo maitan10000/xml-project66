@@ -9,12 +9,10 @@ package FastFood.Common.Constants;
  * @author Everything
  */
 public class FastFoodContants {
+
     /* DB connection */
-    //driver
     final static public String DRIVER = "driver";
-    //url
     final static public String URL = "url";
-    //filename
     final static public String DB = "DB";
 
     /* UserDao */
@@ -48,8 +46,6 @@ public class FastFoodContants {
     final static public String ORDER_ID = "OrderID";
     final static public String PRODUCT_ID = "ProductID";
     final static public String QUANTITY = "Quantity";
-
-
 
     /* OrderDao */
     //final static public String ORDER_ID = "ID";
