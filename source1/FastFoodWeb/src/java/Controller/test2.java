@@ -14,9 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Everything
+ * @author bao
  */
-public class test1 extends HttpServlet {
+public class test2 extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -33,10 +33,10 @@ public class test1 extends HttpServlet {
             /* TODO output your page here
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet test1</title>");  
+            out.println("<title>Servlet test2</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet test1 at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet test2 at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
             */
