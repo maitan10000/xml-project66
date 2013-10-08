@@ -5,12 +5,20 @@
         <servlet-class>controller.Admin</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>Guest</servlet-name>
+        <servlet-class>controller.Guest</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>User</servlet-name>
         <servlet-class>controller.User</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Admin</servlet-name>
         <url-pattern>/Admin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Guest</servlet-name>
+        <url-pattern>/Guest</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>User</servlet-name>

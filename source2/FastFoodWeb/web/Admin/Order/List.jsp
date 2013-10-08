@@ -41,8 +41,13 @@
                     <c:url var="delete" value="Admin?Action=DeleteOrder&ID=${item.ID}" />
                     <c:url var="edit" value="Admin?Action=EditOrder&ID=${item.ID}" />
                     <c:url var="detail" value="Admin?Action=DetailOrder&ID=${item.ID}" />
-                    <td><a href="${delete}">Delete</a>  <a href="${edit}">Edit</a>  <a href="${detail}">Detail</a></td>
+                    <td>
+                        <a href="${delete}">Delete</a>
+                        <a href="${edit}">Edit</a>
+                        <a href="${detail}">Detail</a>
+                    </td>
                 </tr>
             </c:forEach>
+        </table>
     </body>
 </html>

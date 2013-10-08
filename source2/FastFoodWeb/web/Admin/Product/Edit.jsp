@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="fastfood.common.constants.FastFoodContants" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -18,28 +19,28 @@
         <c:set var="product" value="${sessionScope.PRODUCT}"/>
         <c:set var="cate" value="${sessionScope.CATE}"/>
 
-        <form action="Admin?Action=EditProduct" method="POST">
+        <form action="Admin?Action=<%=FastFoodContants.EDIT_PRODUCT%>" method="POST">
             <table>
-                <input type="hidden" name="ID" value="${product.ID}" />
+                <input type="hidden" name="<%= FastFoodContants.ID%>" value="${product.ID}" />
                 <tr>
                     <td>Name: </td>
-                    <td> <input type="text" name="Name" value="${product.name}" /></td>
+                    <td> <input type="text" name="<%= FastFoodContants.NAME%>" value="${product.name}" /></td>
                 </tr>
                 <tr>
                     <td>Price: </td>
-                    <td><input type="text" name="Price" value="${product.price}" /></td>
+                    <td><input type="text" name="<%= FastFoodContants.PRICE%>" value="${product.price}" /></td>
                 </tr>
                 <tr>
                     <td>Image: </td>
-                    <td> <input type="text" name="Image" value="${product.image}" /></td>
+                    <td> <input type="text" name="<%= FastFoodContants.IMAGE%>" value="${product.image}" /></td>
                 </tr>
                 <tr>
                     <td>Desctiption: </td>
-                    <td> <textarea name="Description">${product.description}</textarea></td>
+                    <td> <textarea name="<%= FastFoodContants.DESCRIPTION%>">${product.description}</textarea></td>
                 </tr>
                 <tr>
                     <td>Category: </td>
-                    <td> <select name="CateID">
+                    <td> <select name="<%= FastFoodContants.P_CATEID%>">
                             <c:forEach var="item" items="${cate}">
                                 <c:choose>
                                     <c:when test="${product.cateID == item.ID}">
@@ -59,6 +60,6 @@
                 </tr>
             </table>
         </form>
-                <a href="Admin?Action=ListProduct">Back to List</a>
+        <a href="Admin?Action=<%= FastFoodContants.LIST_PRODUCT%>">Back to List</a>
     </body>
 </html>

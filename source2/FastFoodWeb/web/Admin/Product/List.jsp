@@ -4,6 +4,7 @@
     Author     : Everything
 --%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="fastfood.common.constants.FastFoodContants" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -15,7 +16,7 @@
     </head>
     <body>
         <h1>List All Product</h1>
-        <a href="Admin?Action=AddProduct">Add</a>
+        <a href="Admin?Action=<%= FastFoodContants.ADD_PRODUCT%>">Add</a>
         <table border="1">
             <tr>
                 <th>ID</th>
@@ -36,10 +37,12 @@
                     <td>${item.description}</td>
                     <td>${item.cateID}</td>
                     <td>${item.buyCount}</td>
-                    <c:url var="delete" value="Admin?Action=DeleteProduct&ID=${item.ID}" />
-                    <c:url var="edit" value="Admin?Action=EditProduct&ID=${item.ID}" />
-                    <td><a href="${delete}">Delete</a>  <a href="${edit}">Edit</a></td>
+                    <td>
+                        <a href="Admin?Action=<%= FastFoodContants.DELETE_PRODUCT%>&ID=${item.ID}">Delete</a>
+                        <a href="Admin?Action=<%= FastFoodContants.EDIT_PRODUCT%>&ID=${item.ID}">Edit</a>
+                    </td>
                 </tr>
             </c:forEach>
+        </table>
     </body>
 </html>

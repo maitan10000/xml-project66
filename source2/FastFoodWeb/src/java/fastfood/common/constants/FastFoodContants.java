@@ -43,6 +43,11 @@ public class FastFoodContants {
     final static public String ORDER_ID = "OrderID";
     final static public String PRODUCT_ID = "ProductID";
     final static public String QUANTITY = "Quantity";
+    //Category
+    final static public String LIST_CATEGORY = "ListCategory";
+    final static public String ADD_CATEGORY = "AddCategory";
+    final static public String EDIT_CATEGORY = "EditCategory";
+    final static public String DELETE_CATEGORY = "DeleteCategory";
 
     /* OrderDao */
     //final static public String ORDER_ID = "ID";
@@ -71,12 +76,21 @@ public class FastFoodContants {
     final static public String DELETE_ORDER = "DeleteOrder";
     final static public String EDIT_ORDER = "EditOrder";
     final static public String SESSION_ORDER = "ORDER";
-    //Category
-    final static public String LIST_CATEGORY = "ListCategory";
-    final static public String ADD_CATEGORY = "AddCategory";
-    final static public String EDIT_CATEGORY = "EditCategory";
-    final static public String DELETE_CATEGORY = "DeleteCategory";
 
+    /* Controller Guest */
+    //Register
+    final static public String REGISTER = "Register";
+    final static public String SESSION_MSG = "MSG";
+    final static public String VERIFY = "Verify";
+    final static public String TOKEN = "Token";
 
-
+    /* Controller User */
+    //login
+    final static public String LOGIN = "Login";
+    final static public String SESSION_LOGIN = "LOGIN";
+    //reset pass
+    final static public String RESET_PASS = "Reset";
+    //profile
+    final static public String VIEW_PROFILE = "ViewProfile";
+    final static public String EDIT_PROFILE = "EditProfile";
 }

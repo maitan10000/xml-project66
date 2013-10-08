@@ -6,6 +6,7 @@ package fastfood.common.business.admin;
 
 import fastfood.common.bean.ProductBean;
 import fastfood.common.dao.ProductDaoImp;
+import fastfood.common.dao.ProductDaoInterface;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,7 @@ import java.util.List;
  */
 public class ProductBUSImp implements ProductBUSInterface {
 
-    private ProductDaoImp proDao;
+    private ProductDaoInterface proDao;
 
     public ProductBUSImp() {
         proDao = new ProductDaoImp();

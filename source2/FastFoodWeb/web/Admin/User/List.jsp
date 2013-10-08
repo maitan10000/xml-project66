@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="fastfood.common.constants.FastFoodContants" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -40,10 +41,12 @@
                     <td>${item.phone}</td>
                     <td>${item.role}</td>
                     <td>${item.active}</td>
-                    <c:url var="delete" value="Admin?Action=DeleteUser&UserName=${item.userName}" />
-                    <c:url var="edit" value="Admin?Action=EditUser&UserName=${item.userName}" />
-                    <td><a href="${delete}">Delete</a>  <a href="${edit}">Edit</a></td>
+                    <td>
+                        <a href="Admin?Action=<%= FastFoodContants.DELETE_USER%>&UserName=${item.userName}">Delete</a>
+                        <a href="Admin?Action=<%= FastFoodContants.EDIT_USER%>&UserName=${item.userName}">Edit</a>
+                    </td>
                 </tr>
             </c:forEach>
+        </table>
     </body>
 </html>

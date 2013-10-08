@@ -9,10 +9,13 @@ import fastfood.common.bean.OrderBean;
 import fastfood.common.bean.ProductBean;
 import fastfood.common.bean.UserBean;
 import fastfood.common.business.admin.CategoryBUSImp;
+import fastfood.common.business.admin.CategoryBUSInterface;
 import fastfood.common.business.admin.OrderBUSImp;
+import fastfood.common.business.admin.OrderBUSInterface;
 import fastfood.common.business.admin.ProductBUSImp;
 import fastfood.common.business.admin.ProductBUSInterface;
 import fastfood.common.business.admin.UserBUSImp;
+import fastfood.common.business.admin.UserBUSInterface;
 import fastfood.common.constants.FastFoodContants;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -62,7 +65,8 @@ public class Admin extends HttpServlet {
         PrintWriter out = response.getWriter();
         try {
             if (action.equals(FastFoodContants.LIST_PRODUCT)) {
-                List<ProductBean> allProduct = new ProductBUSImp().listAll(true);
+                ProductBUSInterface productBUS = new ProductBUSImp();
+                List<ProductBean> allProduct = productBUS.listAll(true);
                 if (allProduct != null) {
                     HttpSession session = request.getSession();
                     session.setAttribute(FastFoodContants.SESSION_PRODUCT, allProduct);
@@ -72,7 +76,8 @@ public class Admin extends HttpServlet {
             {
                 int id = Integer.parseInt(request.getParameter(FastFoodContants.ID));
                 if (id >= 0) {
-                    if (new ProductBUSImp().setActive(id, false)) {
+                    ProductBUSInterface productBUS = new ProductBUSImp();
+                    if (productBUS.setActive(id, false)) {
                         List<ProductBean> allProduct = new ProductBUSImp().listAll(true);
                         if (allProduct != null) {
                             HttpSession session = request.getSession();
@@ -83,7 +88,8 @@ public class Admin extends HttpServlet {
                 }
             } else if (action.equals(FastFoodContants.LIST_USER)) //list user
             {
-                List<UserBean> allUser = new UserBUSImp().listAll(false);
+                UserBUSInterface userBUS = new UserBUSImp();
+                List<UserBean> allUser = userBUS.listAll(false);
                 if (allUser != null) {
                     HttpSession session = request.getSession();
                     session.setAttribute(FastFoodContants.SESSION_USER, allUser);
@@ -93,7 +99,8 @@ public class Admin extends HttpServlet {
             {
                 String username = request.getParameter(FastFoodContants.USER_NAME);
                 if (!username.isEmpty()) {
-                    if (new UserBUSImp().setActive(username, false)) {
+                    UserBUSInterface userBUS = new UserBUSImp();
+                    if (userBUS.setActive(username, false)) {
                         List<UserBean> allUser = new UserBUSImp().listAll(false);
                         if (allUser != null) {
                             HttpSession session = request.getSession();
@@ -104,7 +111,8 @@ public class Admin extends HttpServlet {
                 }
             } else if (action.equals(FastFoodContants.LIST_ORDER))//list order
             {
-                List<OrderBean> allOrder = new OrderBUSImp().listAll(true);
+                OrderBUSInterface orderBUS = new OrderBUSImp();
+                List<OrderBean> allOrder = orderBUS.listAll(true);
                 if (allOrder != null) {
                     HttpSession session = request.getSession();
                     session.setAttribute(FastFoodContants.SESSION_ORDER, allOrder);
@@ -118,16 +126,16 @@ public class Admin extends HttpServlet {
                     session.setAttribute(FastFoodContants.SESSION_CATE, allCategory);
                     url = AdminCategoryList;
                 }
-            }else if (action.equals(FastFoodContants.DELETE_CATEGORY)){
+            } else if (action.equals(FastFoodContants.DELETE_CATEGORY)) {
                 int ID = Integer.parseInt(request.getParameter(FastFoodContants.ID));
-                if (ID>=0){
+                if (ID >= 0) {
 
-                    if(new CategoryBUSImp().setActive(ID, false)){
+                    if (new CategoryBUSImp().setActive(ID, false)) {
                         List<CategoryBean> allCategory = new CategoryBUSImp().listAll(false);
-                        if(allCategory!=null){
-                       HttpSession session = request.getSession();
-                       session.setAttribute(FastFoodContants.SESSION_CATE, allCategory);
-                       url = AdminCategoryList;
+                        if (allCategory != null) {
+                            HttpSession session = request.getSession();
+                            session.setAttribute(FastFoodContants.SESSION_CATE, allCategory);
+                            url = AdminCategoryList;
                         }
                     }
                 }
@@ -155,8 +163,10 @@ public class Admin extends HttpServlet {
         {
             int id = Integer.parseInt(request.getParameter(FastFoodContants.ID));
             if (id >= 0) {
-                ProductBean productBean = new ProductBUSImp().getProductByID(id);
-                List<CategoryBean> listCate = new CategoryBUSImp().listAll(true);
+                ProductBUSInterface productBUS = new ProductBUSImp();
+                ProductBean productBean = productBUS.getProductByID(id);
+                CategoryBUSInterface categoryBUS = new CategoryBUSImp();
+                List<CategoryBean> listCate = categoryBUS.listAll(true);
                 if (productBean != null) {
                     HttpSession session = request.getSession();
                     session.setAttribute(FastFoodContants.SESSION_PRODUCT, productBean);
@@ -166,7 +176,8 @@ public class Admin extends HttpServlet {
             }
         } else if (action.equals(FastFoodContants.ADD_PRODUCT))//add product
         {
-            List<CategoryBean> listCate = new CategoryBUSImp().listAll(true);
+            CategoryBUSInterface categoryBUS = new CategoryBUSImp();
+            List<CategoryBean> listCate = categoryBUS.listAll(true);
             HttpSession session = request.getSession();
             session.setAttribute(FastFoodContants.SESSION_CATE, listCate);
             url = AdminProductAdd;
@@ -174,7 +185,8 @@ public class Admin extends HttpServlet {
         {
             String username = request.getParameter(FastFoodContants.USER_NAME);
             if (!username.isEmpty()) {
-                UserBean user = new UserBUSImp().getUserByUserName(username);
+                UserBUSInterface userBUS = new UserBUSImp();
+                UserBean user = userBUS.getUserByUserName(username);
                 if (user != null) {
                     HttpSession session = request.getSession();
                     session.setAttribute(FastFoodContants.SESSION_USER, user);
@@ -190,11 +202,11 @@ public class Admin extends HttpServlet {
                 if (category != null) {
                     HttpSession session = request.getSession();
                     session.setAttribute(FastFoodContants.SESSION_CATE, category);
-                     url = AdminCategoryEdit;
+                    url = AdminCategoryEdit;
                 }
             }
 
-           
+
         }
 
 
@@ -223,14 +235,15 @@ public class Admin extends HttpServlet {
             String description = request.getParameter(FastFoodContants.DESCRIPTION);
             int cateID = Integer.parseInt(request.getParameter(FastFoodContants.P_CATEID));
             if (id >= 0) {
-                ProductBean productBean = new ProductBUSImp().getProductByID(id);
+                ProductBUSInterface productBUS = new ProductBUSImp();
+                ProductBean productBean = productBUS.getProductByID(id);
                 productBean.setName(name);
                 productBean.setPrice(price);
                 productBean.setImage(image);
                 productBean.setDescription(description);
                 productBean.setCateID(cateID);
-                if (new ProductBUSImp().update(productBean)) {
-                    List<ProductBean> allProduct = new ProductBUSImp().listAll(true);
+                if (productBUS.update(productBean)) {
+                    List<ProductBean> allProduct = productBUS.listAll(true);
                     if (allProduct != null) {
                         HttpSession session = request.getSession();
                         session.setAttribute(FastFoodContants.SESSION_PRODUCT, allProduct);
@@ -252,8 +265,10 @@ public class Admin extends HttpServlet {
             productBean.setDescription(description);
             productBean.setCateID(cateID);
 
-            if (new ProductBUSImp().add(productBean)) {
-                List<ProductBean> allProduct = new ProductBUSImp().listAll(true);
+            ProductBUSInterface productBUS = new ProductBUSImp();
+
+            if (productBUS.add(productBean)) {
+                List<ProductBean> allProduct = productBUS.listAll(true);
                 if (allProduct != null) {
                     HttpSession session = request.getSession();
                     session.setAttribute(FastFoodContants.SESSION_PRODUCT, allProduct);
@@ -270,7 +285,9 @@ public class Admin extends HttpServlet {
             String phone = request.getParameter(FastFoodContants.PHONE);
             String role = request.getParameter(FastFoodContants.ROLE);
             boolean isActive = Boolean.parseBoolean(request.getParameter(FastFoodContants.IS_ACTIVE));
-            UserBean user = new UserBUSImp().getUserByUserName(username);
+
+            UserBUSInterface userBUS = new UserBUSImp();
+            UserBean user = userBUS.getUserByUserName(username);
             user.setFirstName(firstname);
             user.setLastName(lastname);
             user.setEmail(email);
@@ -278,8 +295,8 @@ public class Admin extends HttpServlet {
             user.setPhone(phone);
             user.setRole(role);
             user.setActive(isActive);
-            if (new UserBUSImp().update(user)) {
-                List<UserBean> allUser = new UserBUSImp().listAll(false);
+            if (userBUS.update(user)) {
+                List<UserBean> allUser = userBUS.listAll(false);
                 if (allUser != null) {
                     HttpSession session = request.getSession();
                     session.setAttribute(FastFoodContants.SESSION_USER, allUser);

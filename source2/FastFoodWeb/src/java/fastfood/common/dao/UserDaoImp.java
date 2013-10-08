@@ -42,8 +42,7 @@ public class UserDaoImp implements UserDaoInterface {
             SimpleDateFormat dayFormat = new SimpleDateFormat("yyyy/MM/dd");
             String todayS = dayFormat.format(todayD);
             pst.setString(9, todayS);
-
-            pst.setString(10, "true");
+            pst.setBoolean(10, user.isActive());
             return pst.executeUpdate() > 0;//return result
         } catch (Exception e) {
             e.printStackTrace();
