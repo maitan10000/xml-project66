@@ -71,4 +71,12 @@ public class FastFoodContants {
     final static public String DELETE_ORDER = "DeleteOrder";
     final static public String EDIT_ORDER = "EditOrder";
     final static public String SESSION_ORDER = "ORDER";
+    //Category
+    final static public String LIST_CATEGORY = "ListCategory";
+    final static public String ADD_CATEGORY = "AddCategory";
+    final static public String EDIT_CATEGORY = "EditCategory";
+    final static public String DELETE_CATEGORY = "DeleteCategory";
+
+
+
 }

@@ -18,5 +18,6 @@
         <a href="Admin?Action=ListProduct">List Product</a>
         <a href="Admin?Action=ListUser">List User</a>
         <a href="Admin?Action=ListOrder">List Order</a>
+        <a href="Admin?Action=ListCategory">List Category</a>
     </body>
 </html>

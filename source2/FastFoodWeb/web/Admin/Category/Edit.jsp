@@ -14,43 +14,32 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Edit product</h1>
-        <c:set var="product" value="${sessionScope.PRODUCT}"/>
-        <c:set var="cate" value="${sessionScope.CATE}"/>
+        <h1>Edit Category</h1>
+        <c:set var="category" value="${sessionScope.CATE}"/>;
 
-        <form action="Admin?Action=EditProduct" method="POST">
+
+        <form action="Admin?Action=EditCategory" method="POST">
             <table>
-                <input type="hidden" name="ID" value="${product.ID}" />
+                <input type="hidden" name="ID" value="${category.ID}" />
                 <tr>
                     <td>Name: </td>
-                    <td> <input type="text" name="Name" value="${product.name}" /></td>
+                    <td> <input type="text" name="Name" value="${category.name}" /></td>
                 </tr>
                 <tr>
-                    <td>Price: </td>
-                    <td><input type="text" name="Price" value="${product.price}" /></td>
-                </tr>
-                <tr>
-                    <td>Image: </td>
-                    <td> <input type="text" name="Image" value="${product.image}" /></td>
-                </tr>
-                <tr>
-                    <td>Desctiption: </td>
-                    <td> <textarea name="Description">${product.description}</textarea></td>
-                </tr>
-                <tr>
-                    <td>Category: </td>
-                    <td> <select name="CateID">
-                            <c:forEach var="item" items="${cate}">
-                                <c:choose>
-                                    <c:when test="${product.cateID == item.ID}">
-                                        <option value="${item.ID}" selected>${item.name}</option>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <option value="${item.ID}">${item.name}</option>
-                                    </c:otherwise>
-                                </c:choose>
-                            </c:forEach>
-                        </select>
+                    <td>IsActive </td>
+                    <td>
+                <select name="IsActive">
+                    <c:forEach var="item" items="True,False">
+                        <c:choose>
+                            <c:when test="${category.isActive == item}">
+                                <option value="${item}" selected>${item}</option>
+                            </c:when>
+                            <c:otherwise>
+                                <option value="${item}">${item}</option>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
+                </select>
                     </td>
                 </tr>
                 <tr>
@@ -59,6 +48,6 @@
                 </tr>
             </table>
         </form>
-                <a href="Admin?Action=ListProduct">Back to List</a>
+        <a href="Admin?Action=ListCategory">Back to List</a>
     </body>
 </html>

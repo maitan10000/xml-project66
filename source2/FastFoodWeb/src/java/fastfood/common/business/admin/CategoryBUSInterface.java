@@ -14,4 +14,8 @@ import java.util.List;
 public interface CategoryBUSInterface {
 
     public List<CategoryBean> listAll(boolean showActiveOnly);
+    public boolean add(String Name);
+    public boolean edit(CategoryBean category);
+    public CategoryBean GetCategorybyID(int ID);
+    public boolean setActive(int ID, boolean active);
 }

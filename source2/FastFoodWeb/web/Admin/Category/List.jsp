@@ -14,32 +14,27 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>List All Product</h1>
-        <a href="Admin?Action=AddProduct">Add</a>
+        <h1>List All Category</h1>
+        <a href="Admin?Action=AddCategory">Add</a>
         <table border="1">
             <tr>
                 <th>ID</th>
                 <th>Name</th>
-                <th>Price</th>
-                <th>Image</th>
-                <th>Description</th>
-                <th>CateID</th>
-                <th>BuyCount</th>
+                <th>IsActive</th>
                 <th></th>
             </tr>
-            <c:forEach var="item" items="${sessionScope.PRODUCT}" varStatus="counter">
+
+
+            <c:forEach var="item" items="${sessionScope.CATE}" varStatus="counter">
                 <tr>
                     <td>${item.ID}</td>
                     <td>${item.name}</td>
-                    <td>${item.price}</td>
-                    <td>${item.image}</td>
-                    <td>${item.description}</td>
-                    <td>${item.cateID}</td>
-                    <td>${item.buyCount}</td>
-                    <c:url var="delete" value="Admin?Action=DeleteProduct&ID=${item.ID}" />
-                    <c:url var="edit" value="Admin?Action=EditProduct&ID=${item.ID}" />
+                    <td>${item.isActive}</td>
+                    <c:url var="delete" value="Admin?Action=DeleteCategory&ID=${item.ID}" />
+                    <c:url var="edit" value="Admin?Action=EditCategory&ID=${item.ID}" />
                     <td><a href="${delete}">Delete</a>  <a href="${edit}">Edit</a></td>
                 </tr>
             </c:forEach>
+        </table>
     </body>
 </html>

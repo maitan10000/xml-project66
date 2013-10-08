@@ -47,9 +47,9 @@ public class CategoryDaoImp implements CategoryDaoInterface {
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-            }
-            return false;
+            }          
         }
+        return false;
     }
 
     @Override
@@ -165,9 +165,9 @@ public class CategoryDaoImp implements CategoryDaoInterface {
             conn = DBUtility.makeConnection();
             String query = "";
             if (showActiveOnly == true) {
-                query = "SELECT * FROM Category WHERE IsActive = 'true'";
+                query = "SELECT ID FROM Category WHERE IsActive = 'true'";
             } else {
-                query = "SELECT * FROM Category";
+                query = "SELECT ID FROM Category";
             }
             pst = conn.prepareStatement(query);
             ResultSet rs = pst.executeQuery();

@@ -11,6 +11,7 @@ import fastfood.common.bean.UserBean;
 import fastfood.common.business.admin.CategoryBUSImp;
 import fastfood.common.business.admin.OrderBUSImp;
 import fastfood.common.business.admin.ProductBUSImp;
+import fastfood.common.business.admin.ProductBUSInterface;
 import fastfood.common.business.admin.UserBUSImp;
 import fastfood.common.constants.FastFoodContants;
 import java.io.IOException;
@@ -22,6 +23,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.apache.catalina.Session;
 
 /**
  *
@@ -39,6 +41,10 @@ public class Admin extends HttpServlet {
     //Order
     final static String AdminOrderList = "Admin/Order/List.jsp";
     final static String AdminOrderEdit = "Admin/Order/Edit.jsp";
+    //Category
+    final static String AdminCategoryList = "Admin/Category/List.jsp";
+    final static String AdminCategoryAdd = "Admin/Category/Add.jsp";
+    final static String AdminCategoryEdit = "Admin/Category/Edit.jsp";
     final static String invalid = "invalid.jsp";
     static String url = invalid;
     static String action = "";
@@ -104,9 +110,28 @@ public class Admin extends HttpServlet {
                     session.setAttribute(FastFoodContants.SESSION_ORDER, allOrder);
                     url = AdminOrderList;
                 }
+            } else if (action.equals(FastFoodContants.LIST_CATEGORY))//list category
+            {
+                List<CategoryBean> allCategory = new CategoryBUSImp().listAll(false);
+                if (allCategory != null) {
+                    HttpSession session = request.getSession();
+                    session.setAttribute(FastFoodContants.SESSION_CATE, allCategory);
+                    url = AdminCategoryList;
+                }
+            }else if (action.equals(FastFoodContants.DELETE_CATEGORY)){
+                int ID = Integer.parseInt(request.getParameter(FastFoodContants.ID));
+                if (ID>=0){
+
+                    if(new CategoryBUSImp().setActive(ID, false)){
+                        List<CategoryBean> allCategory = new CategoryBUSImp().listAll(false);
+                        if(allCategory!=null){
+                       HttpSession session = request.getSession();
+                       session.setAttribute(FastFoodContants.SESSION_CATE, allCategory);
+                       url = AdminCategoryList;
+                        }
+                    }
+                }
             }
-
-
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
         } finally {
@@ -156,7 +181,22 @@ public class Admin extends HttpServlet {
                     url = AdminUserEdit;
                 }
             }
+        } else if (action.equals(FastFoodContants.ADD_CATEGORY)) {
+            url = AdminCategoryAdd;
+        } else if (action.equals(FastFoodContants.EDIT_CATEGORY)) {
+            int ID = Integer.parseInt(request.getParameter(FastFoodContants.ID));
+            if (ID >= 0) {
+                CategoryBean category = new CategoryBUSImp().GetCategorybyID(ID);
+                if (category != null) {
+                    HttpSession session = request.getSession();
+                    session.setAttribute(FastFoodContants.SESSION_CATE, category);
+                     url = AdminCategoryEdit;
+                }
+            }
+
+           
         }
+
 
         processRequest(request, response);
     }
@@ -246,8 +286,33 @@ public class Admin extends HttpServlet {
                     url = AdminUserList;
                 }
             }
+        } else if (action.equals(FastFoodContants.ADD_CATEGORY)) {
+            String name = request.getParameter(FastFoodContants.NAME);
+            if (new CategoryBUSImp().add(name)) {
+                List<CategoryBean> category = new CategoryBUSImp().listAll(false);
+                if (category != null) {
+                    HttpSession session = request.getSession();
+                    session.setAttribute(FastFoodContants.SESSION_CATE, category);
+                    url = AdminCategoryList;
+                }
+            }
+        } else if (action.equals(FastFoodContants.EDIT_CATEGORY)) {
+            int ID = Integer.parseInt(request.getParameter(FastFoodContants.ID));
+            String Name = request.getParameter(FastFoodContants.NAME);
+            boolean IsActive = Boolean.parseBoolean(request.getParameter(FastFoodContants.IS_ACTIVE));
+            CategoryBean category = new CategoryBean();
+            category.setID(ID);
+            category.setName(Name);
+            category.setIsActive(IsActive);
+            if (new CategoryBUSImp().edit(category)) {
+                List<CategoryBean> allCategory = new CategoryBUSImp().listAll(false);
+                if (allCategory != null) {
+                    HttpSession session = request.getSession();
+                    session.setAttribute(FastFoodContants.SESSION_CATE, allCategory);
+                    url = AdminCategoryList;
+                }
+            }
         }
-
         processRequest(request, response);
 
 
