@@ -185,7 +185,7 @@ public class OrderDetailDaoImp implements OrderDetailDaoInterface {
                 int OrderID = rs.getInt(FastFoodContants.ORDER_ID);
                 int ProductID = rs.getInt(FastFoodContants.PRODUCT_ID);
 
-                result.add(new Integer[]{OrderID,ProductID});
+                result.add(new Integer[]{OrderID, ProductID});
             }
             return result;
         } catch (Exception e) {
@@ -196,7 +196,49 @@ public class OrderDetailDaoImp implements OrderDetailDaoInterface {
                     pst.close();
                 }
             } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    public List<OrderDetailBean> ListByOrderDetailByOrderID(int orderID) {
+        List<OrderDetailBean> result = null;
+        Connection conn = null;
+        PreparedStatement pst = null;
+        try {
+            conn = DBUtility.makeConnection();
+            String query = "SELECT * FROM OrderDetail WHERE OrderID=?";
+            pst = conn.prepareStatement(query);
+            pst.setInt(1, orderID);
+            ResultSet rs = pst.executeQuery();
+            result = new ArrayList<OrderDetailBean>();
+            while (rs.next()) {
+                int OrderID = rs.getInt(FastFoodContants.ORDER_ID);
+                int ProductID = rs.getInt(FastFoodContants.PRODUCT_ID);
+                int Price = rs.getInt(FastFoodContants.PRICE);
+                int Quantity = rs.getInt(FastFoodContants.QUANTITY);
+                boolean IsActive = rs.getBoolean(FastFoodContants.IS_ACTIVE);
+                result.add(new OrderDetailBean(OrderID, ProductID, Price, Quantity, IsActive));
+            }
+            return result;
+        } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (pst != null) {
+                    pst.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
             try {

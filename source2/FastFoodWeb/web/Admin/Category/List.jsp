@@ -4,6 +4,7 @@
     Author     : Everything
 --%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="fastfood.common.constants.FastFoodContants" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -15,7 +16,8 @@
     </head>
     <body>
         <h1>List All Category</h1>
-        <a href="Admin?Action=AddCategory">Add</a>
+        <a href="Admin?Action=<%= FastFoodContants.ADD_CATEGORY%>">Add</a>
+        <a href="Admin?Action=<%= FastFoodContants.EXPORT_CATE%>">Export...</a>
         <table border="1">
             <tr>
                 <th>ID</th>
@@ -23,8 +25,6 @@
                 <th>IsActive</th>
                 <th></th>
             </tr>
-
-
             <c:forEach var="item" items="${sessionScope.CATE}" varStatus="counter">
                 <tr>
                     <td>${item.ID}</td>

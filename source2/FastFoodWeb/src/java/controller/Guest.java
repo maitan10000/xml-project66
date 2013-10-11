@@ -4,15 +4,25 @@
  */
 package controller;
 
-import fastfood.common.addtionbean.AccountResult;
+import fastfood.common.addtionbean.ProductView;
+import fastfood.common.addtionbean.ProductViews;
+import fastfood.common.addtionbean.ResultBean;
+import fastfood.common.bean.ProductBean;
 import fastfood.common.bean.UserBean;
+import fastfood.common.business.admin.ProductBUSImp;
+import fastfood.common.business.admin.ProductBUSInterface;
 import fastfood.common.business.admin.UserBUSImp;
 import fastfood.common.business.admin.UserBUSInterface;
 import fastfood.common.business.guest.GuestBUSImp;
 import fastfood.common.business.guest.GuestBUSInterface;
 import fastfood.common.constants.FastFoodContants;
+import fastfood.common.utility.XMLTools;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -44,12 +54,41 @@ public class Guest extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
+        PrintWriter out = null;////response.getWriter();
         try {
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+            if (action.equals(FastFoodContants.PRODUCT_DETAIL)) {
+                int id = Integer.parseInt(request.getParameter(FastFoodContants.ID));
+                ProductBUSInterface productBUS = new ProductBUSImp();
+                ProductBean productBean = productBUS.getProductByID(id);
+                if (productBean != null) {
+                    ProductView productView = new ProductView();
+                    productView.setID(productBean.getID());
+                    productView.setName(productBean.getName());
+                    productView.setPrice(productBean.getPrice());
+                    productView.setImage(productBean.getImage());
+                    productView.setCateID(productBean.getCateID());
+                    ProductViews productViews = new ProductViews();
+                    List<ProductView> list = new ArrayList<ProductView>();
+                    list.add(productView);
+                    productViews.setProductView(list);
+
+                    ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+                    XMLTools.JAXBMarshalling(productBean, outStream);
+                    byte[] content = outStream.toByteArray();
+                    response.setHeader("Content-type", "text/xml");
+                    response.setContentLength(content.length);
+                    response.getOutputStream().write(content);
+                    response.getOutputStream().flush();
+                }
+            }
+            if (out != null) {
+                RequestDispatcher rd = request.getRequestDispatcher(url);
+                rd.forward(request, response);
+            }
         } finally {
-            out.close();
+            if (out != null) {
+                out.close();
+            }
         }
     }
 
@@ -70,7 +109,7 @@ public class Guest extends HttpServlet {
         } else if (action.equals(FastFoodContants.VERIFY)) {
             String token = request.getParameter(FastFoodContants.TOKEN);
             GuestBUSInterface guestBUS = new GuestBUSImp();
-            AccountResult result = guestBUS.verify(token);
+            ResultBean result = guestBUS.verify(token);
             HttpSession session = request.getSession();
             session.setAttribute(FastFoodContants.SESSION_MSG, result.getMessage());
             url = GuestVerify;
@@ -109,10 +148,10 @@ public class Guest extends HttpServlet {
             user.setPhone(phone);
             String serverPath = request.getRequestURL().toString();
             serverPath = serverPath.split("Guest")[0];
-            AccountResult result = guestBUS.register(user, serverPath);
+            ResultBean result = guestBUS.register(user, serverPath);
             HttpSession session = request.getSession();
             session.setAttribute(FastFoodContants.SESSION_MSG, result.getMessage());
-            if (result.isResult() == false) {
+            if (result.isSuccess() == false) {
                 session.setAttribute(FastFoodContants.SESSION_USER, user);
             } else {
             }

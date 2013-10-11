@@ -28,7 +28,7 @@
                         UserName:
                     </td>
                     <td>
-                        <input type="text" name="<%= FastFoodContants.USER_NAME%>" value="" />
+                        <input type="text" name="<%= FastFoodContants.USER_NAME%>" value="maitan_10000" />
                     </td>
                 </tr>
                 <tr>
@@ -36,7 +36,7 @@
                         Password:
                     </td>
                     <td>
-                        <input type="text" name="<%= FastFoodContants.PASSWORD%>" value="" />
+                        <input type="text" name="<%= FastFoodContants.PASSWORD%>" value="12345" />
                     </td>
                 </tr>
                 <tr>

@@ -54,4 +54,17 @@ public class OrderBUSImp implements OrderBUSInterface {
         }
         return result;
     }
+
+    public OrderBean getOrderByID(int orderID) {
+        return orderDao.ListByOrderID(orderID);
+    }
+
+    public List<OrderBean> listByBuyer(String buyerName) {
+        List<OrderBean> result = new ArrayList<OrderBean>();
+        List<Integer> listID = orderDao.ListAllOrderByBuyer(buyerName);
+        for (int i = listID.size() - 1; i >= 0; i--) {
+            result.add(orderDao.ListByOrderID(listID.get(i)));
+        }
+        return result;
+    }
 }

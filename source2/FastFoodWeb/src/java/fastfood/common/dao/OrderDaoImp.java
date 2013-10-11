@@ -27,21 +27,20 @@ public class OrderDaoImp implements OrderDaoInterface {
         PreparedStatement pst = null;
         try {
             conn = DBUtility.makeConnection();
-            String query = "INSERT INTO [Order](BuyerName, Creator, Status, Notes,"
+            String query = "INSERT INTO [Order](BuyerName, Status, Notes,"
                     + " ReceiveAddress, CreateDate, IsActive)"
-                    + "VALUES(?,?, ?, ?, ?, ?, ?)";
+                    + "VALUES(?, ?, ?, ?, ?, ?)";
             pst = conn.prepareStatement(query);
             pst.setString(1, order.getBuyerName());
-            pst.setString(2, order.getCreator());
-            pst.setString(3, order.getStatus());
-            pst.setString(4, order.getNotes());
-            pst.setString(5, order.getReceiveAddress());
+            pst.setString(2, order.getStatus());
+            pst.setString(3, order.getNotes());
+            pst.setString(4, order.getReceiveAddress());
             Date todayD = new Date(System.currentTimeMillis());
             SimpleDateFormat dayFormat = new SimpleDateFormat("yyyy/MM/dd");
             String todayS = dayFormat.format(todayD);
-            pst.setString(6, todayS);
-            pst.setBoolean(7, true);
-            return pst.executeUpdate() > 0;//return result
+            pst.setString(5, todayS);
+            pst.setBoolean(6, true);
+            return pst.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

@@ -4,7 +4,7 @@
  */
 package fastfood.common.business.guest;
 
-import fastfood.common.addtionbean.AccountResult;
+import fastfood.common.addtionbean.ResultBean;
 import fastfood.common.bean.UserBean;
 
 /**
@@ -18,12 +18,12 @@ public interface GuestBUSInterface {
      * @param newUser
      * @return 
      */
-    public AccountResult register(UserBean newUser, String serverPath);
+    public ResultBean register(UserBean newUser, String serverPath);
 
     /**
      * Verify registered account
      * @param verifyToken
      * @return result
      */
-    public AccountResult verify(String verifyToken);
+    public ResultBean verify(String verifyToken);
 }

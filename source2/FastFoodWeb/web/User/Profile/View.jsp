@@ -8,13 +8,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/xml" prefix="x"%>
 
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
     </head>
-    <body>
+    <body>       
         <h1>View Profile</h1>
         <c:set var="user" value="${sessionScope.LOGIN}"/>
         <table>
@@ -24,14 +25,6 @@
                 </td>
                 <td>
                     ${user.userName}
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Password:
-                </td>
-                <td>
-                    ${user.password}
                 </td>
             </tr>
             <tr>
@@ -87,7 +80,7 @@
 
                 </td>
                 <td>
-                    <a href="User?Action=EditProfile">Edit Profile</a>
+                    <a href="#User?Action=EditProfile">Edit Profile</a>
                 </td>
             </tr>
         </table>

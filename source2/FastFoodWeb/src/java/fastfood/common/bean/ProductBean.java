@@ -5,13 +5,19 @@
 package fastfood.common.bean;
 
 import java.sql.Date;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  *
  * @author bao
  */
+@XmlRootElement
 public class ProductBean {
-
     private int ID;
     private String Name;
     private int Price;
@@ -142,6 +148,7 @@ public class ProductBean {
     /**
      * @return the CreateDate
      */
+    @XmlTransient
     public Date getCreateDate() {
         return CreateDate;
     }
@@ -156,6 +163,7 @@ public class ProductBean {
     /**
      * @return the LastUpdate
      */
+    @XmlTransient
     public Date getLastUpdate() {
         return LastUpdate;
     }
@@ -170,6 +178,7 @@ public class ProductBean {
     /**
      * @return the IsActive
      */
+    @XmlTransient
     public boolean isIsActive() {
         return IsActive;
     }

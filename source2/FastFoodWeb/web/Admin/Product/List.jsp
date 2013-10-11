@@ -17,6 +17,7 @@
     <body>
         <h1>List All Product</h1>
         <a href="Admin?Action=<%= FastFoodContants.ADD_PRODUCT%>">Add</a>
+        <a href="Admin?Action=<%= FastFoodContants.EXPORT_PRODUCT%>">Export...</a>
         <table border="1">
             <tr>
                 <th>ID</th>

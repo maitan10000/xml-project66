@@ -8,7 +8,7 @@ package fastfood.common.addtionbean;
  *
  * @author Everything
  */
-public class AccountResult {
+public class ResultBean {
 
     private boolean Success;
     private String Message;
@@ -21,13 +21,11 @@ public class AccountResult {
         this.Message = Message;
     }
 
-    public boolean isResult() {
+    public boolean isSuccess() {
         return Success;
     }
 
-    public void setResult(boolean Result) {
-        this.Success = Result;
+    public void setSuccess(boolean Success) {
+        this.Success = Success;
     }
-
-
 }

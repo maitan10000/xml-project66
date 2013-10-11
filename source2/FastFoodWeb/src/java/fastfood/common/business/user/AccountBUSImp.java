@@ -4,7 +4,7 @@
  */
 package fastfood.common.business.user;
 
-import fastfood.common.addtionbean.AccountResult;
+import fastfood.common.addtionbean.ResultBean;
 import fastfood.common.bean.UserBean;
 import fastfood.common.dao.UserDaoImp;
 import fastfood.common.dao.UserDaoInterface;
@@ -16,22 +16,22 @@ import fastfood.common.utility.Mail;
  */
 public class AccountBUSImp implements AccountBUSInterface {
 
-    public AccountResult login(String userName, String password) {
-        AccountResult result = new AccountResult();
+    public ResultBean login(String userName, String password) {
+        ResultBean result = new ResultBean();
         UserDaoInterface userDao = new UserDaoImp();
         UserBean userBean = userDao.ListByUserName(userName);
         if (userBean != null && userBean.getPassword().equals(password)) {
-            result.setResult(true);
+            result.setSuccess(true);
             result.setMessage("Login successfull");
         } else {
-            result.setResult(false);
+            result.setSuccess(false);
             result.setMessage("Login fail");
         }
         return result;
     }
 
-    public AccountResult resetPassword(String userName) {
-        AccountResult result = new AccountResult();
+    public ResultBean resetPassword(String userName) {
+        ResultBean result = new ResultBean();
         UserDaoInterface userDao = new UserDaoImp();
         UserBean userBean = userDao.ListByUserName(userName);
         if (userBean != null) {
@@ -42,10 +42,10 @@ public class AccountBUSImp implements AccountBUSInterface {
             String subject = "Reset Password";
             String message = "Your password: " + password;
             Mail.Send(from, to, subject, message);
-            result.setResult(true);
+            result.setSuccess(true);
             result.setMessage("Please check your email to get password");
         } else {
-            result.setResult(false);
+            result.setSuccess(false);
             result.setMessage("User not exist");
         }
         return result;

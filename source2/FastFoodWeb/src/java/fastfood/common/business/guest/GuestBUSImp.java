@@ -4,7 +4,7 @@
  */
 package fastfood.common.business.guest;
 
-import fastfood.common.addtionbean.AccountResult;
+import fastfood.common.addtionbean.ResultBean;
 import fastfood.common.bean.UserBean;
 import fastfood.common.business.admin.UserBUSImp;
 import fastfood.common.business.admin.UserBUSInterface;
@@ -24,12 +24,12 @@ import sun.misc.BASE64Encoder;
  */
 public class GuestBUSImp implements GuestBUSInterface {
 
-    public AccountResult register(UserBean newUser, String serverPath) {
-        AccountResult result = new AccountResult();
+    public ResultBean register(UserBean newUser, String serverPath) {
+        ResultBean result = new ResultBean();
         UserDaoInterface userDao = new UserDaoImp();
         if (userDao.ListByUserName(newUser.getUserName()) != null)//user existed
         {
-            result.setResult(false);
+            result.setSuccess(false);
             result.setMessage("User existed");
         } else {
             newUser.setActive(false);
@@ -47,18 +47,18 @@ public class GuestBUSImp implements GuestBUSInterface {
                 String message = "Please verify your account as this link <a href='"
                         + linkVerify + "'>" + linkVerify + "</a>";
                 Mail.Send(from, to, subject, message);
-                result.setResult(true);
+                result.setSuccess(true);
                 result.setMessage("Create successfull. Please check your email to verify!");
             } else {
-                result.setResult(false);
+                result.setSuccess(false);
                 result.setMessage("An error occured");
             }
         }
         return result;
     }
 
-    public AccountResult verify(String verifyToken) {
-        AccountResult result = new AccountResult();
+    public ResultBean verify(String verifyToken) {
+        ResultBean result = new ResultBean();
         try {
             BASE64Decoder decoder = new BASE64Decoder();
             String userName = new String(decoder.decodeBuffer(verifyToken));
@@ -67,10 +67,10 @@ public class GuestBUSImp implements GuestBUSInterface {
             if (user != null) {
                 user.setActive(true);
                 userBUS.update(user);
-                result.setResult(true);
+                result.setSuccess(true);
                 result.setMessage("Account verify successfull");
             } else {
-                result.setResult(true);
+                result.setSuccess(true);
                 result.setMessage("Acount verify fail");
             }
         } catch (IOException ex) {

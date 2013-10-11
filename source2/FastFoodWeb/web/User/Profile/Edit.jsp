@@ -19,7 +19,7 @@
         <h1>Edit Profile</h1>
         <c:set var="user" value="${sessionScope.LOGIN}"/>
 
-        <form action="User?Action=<%= FastFoodContants.EDIT_PROFILE%>" method="POST">
+        <form action="User?Action=<%= FastFoodContants.EDIT_PROFILE%>" method="POST" onsubmit="return onSubmitForm(this);">
             <table>
                 <input type="hidden" name="<%= FastFoodContants.USER_NAME%>" value="${user.userName}" />
                 <tr>
@@ -28,7 +28,7 @@
                 </tr>
                 <tr>
                     <td>Password </td>
-                    <td><input type="text" name="<%= FastFoodContants.PASSWORD%>" value="${user.password}" /></td>
+                    <td><input type="password" name="<%= FastFoodContants.PASSWORD%>" value="${user.password}" /></td>
                 </tr>
                 <tr>
                     <td>FirstName: </td>
@@ -50,7 +50,7 @@
                     <td>Phone: </td>
                     <td> <input type="text" name="<%= FastFoodContants.PHONE%>" value="${user.phone}" /></td>
                 </tr>
-                 <tr>
+                <tr>
                     <td>CreateDate: </td>
                     <td><span>${user.createDate}</span></td>
                 </tr>
@@ -60,6 +60,6 @@
                 </tr>
             </table>
         </form>
-        <a href="User?Action=<%= FastFoodContants.VIEW_PROFILE%>">Back to View</a>
+        <a href="#User?Action=<%= FastFoodContants.VIEW_PROFILE%>">Back to View</a>
     </body>
 </html>

@@ -26,7 +26,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import org.apache.catalina.Session;
 
 /**
  *
@@ -139,6 +138,17 @@ public class Admin extends HttpServlet {
                         }
                     }
                 }
+            } else if (action.equals(FastFoodContants.EXPORT_PRODUCT))//export product
+            {
+                ProductBUSInterface productBUS = new ProductBUSImp();
+                String serverPath = getServletContext().getRealPath("/");
+                productBUS.exportProduct(serverPath + "Data/products.xml");
+                url = AdminProductList;
+            } else if (action.equals(FastFoodContants.EXPORT_CATE)) {
+                CategoryBUSInterface categoryBUS = new CategoryBUSImp();
+                String serverPath = getServletContext().getRealPath("/");
+                categoryBUS.exportCategory(serverPath + "Data/categorys.xml");
+                url = AdminCategoryList;
             }
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);

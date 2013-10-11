@@ -4,7 +4,7 @@
  */
 package fastfood.common.business.user;
 
-import fastfood.common.addtionbean.AccountResult;
+import fastfood.common.addtionbean.ResultBean;
 
 /**
  *
@@ -12,7 +12,7 @@ import fastfood.common.addtionbean.AccountResult;
  */
 public interface AccountBUSInterface {
 
-    public AccountResult login(String userName, String password);
+    public ResultBean login(String userName, String password);
 
-    public AccountResult resetPassword(String userName);
+    public ResultBean resetPassword(String userName);
 }
