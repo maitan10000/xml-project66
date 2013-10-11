@@ -16,7 +16,7 @@
     </head>
     <body>
         <h1>Add Cate</h1>
-    <form action="Admin?Action=AddCategory" method="POST">
+    <form action="Admin?Action=AddCategory" method="POST"  onsubmit="return onSubmitForm(this);">
         <table>       
             <tr>
                 <td>Name: </td>
@@ -27,7 +27,7 @@
                 <td> <input type="submit" value="Add" /></td>
             </tr>
         </table>
-        <a href="Admin?Action=ListCategory">Back to List</a>
+        <a href="#Admin?Action=ListCategory">Back to List</a>
     </form>
 </body>
 </html>

@@ -19,8 +19,19 @@
         <c:set var="listOrder" value="${sessionScope.ORDER}"/>
         <table border="1">
             <tr>
+                <th>No</th>
+                <th>Status</th>
+                <th>Create Date</th>
                 <th></th>
             </tr>
+            <c:forEach var="item" items="${listOrder}" varStatus="counter" >
+                <tr>
+                    <td>${counter.count}</td>
+                    <td>${item.status}</td>
+                    <td>${item.createDate}</td>
+                    <td><a href="#Action=OrderDetail&ID=${item.ID}">Detail</a></td>
+                </tr>
+            </c:forEach> 
         </table>
     </body>
 </html>

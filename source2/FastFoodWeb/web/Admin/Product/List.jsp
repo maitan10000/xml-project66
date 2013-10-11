@@ -16,8 +16,7 @@
     </head>
     <body>
         <h1>List All Product</h1>
-        <a href="Admin?Action=<%= FastFoodContants.ADD_PRODUCT%>">Add</a>
-        <a href="Admin?Action=<%= FastFoodContants.EXPORT_PRODUCT%>">Export...</a>
+        <a href="#Admin?Action=<%= FastFoodContants.ADD_PRODUCT%>">Add</a>
         <table border="1">
             <tr>
                 <th>ID</th>
@@ -39,8 +38,8 @@
                     <td>${item.cateID}</td>
                     <td>${item.buyCount}</td>
                     <td>
-                        <a href="Admin?Action=<%= FastFoodContants.DELETE_PRODUCT%>&ID=${item.ID}">Delete</a>
-                        <a href="Admin?Action=<%= FastFoodContants.EDIT_PRODUCT%>&ID=${item.ID}">Edit</a>
+                        <a href="#Admin?Action=<%= FastFoodContants.DELETE_PRODUCT%>&ID=${item.ID}">Delete</a>
+                        <a href="#Admin?Action=<%= FastFoodContants.EDIT_PRODUCT%>&ID=${item.ID}">Edit</a>
                     </td>
                 </tr>
             </c:forEach>

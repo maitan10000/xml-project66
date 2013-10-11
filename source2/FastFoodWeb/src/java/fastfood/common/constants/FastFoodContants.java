@@ -79,6 +79,8 @@ public class FastFoodContants {
     //Export product
     final static public String EXPORT_PRODUCT = "ExportProduct";
     final static public String EXPORT_CATE = "ExportCategory";
+    final static public String EXPORT_DATA = "ExportData";
+
 
     /* Order status */
     final static public String STATUS_UNAPPROVED = "UNAPPROVED";
@@ -95,6 +97,7 @@ public class FastFoodContants {
     /* Controller User */
     //login
     final static public String LOGIN = "Login";
+    final static public String LOGOUT = "Logout";
     final static public String SESSION_LOGIN = "LOGIN";
     //reset pass
     final static public String RESET_PASS = "Reset";
@@ -114,4 +117,5 @@ public class FastFoodContants {
     final static public String SESSION_ORDERDETAIL = "ORDERDETAIL";
     final static public String PRINT_PDF = "PrintPDF";
     final static public String LIST_OLD_ORDER = "ListOldOrder";
+    final static public String VIEW_ORDER_DETAIL = "OrderDetail";
 }

@@ -19,7 +19,7 @@
         <c:set var="product" value="${sessionScope.PRODUCT}"/>
         <c:set var="cate" value="${sessionScope.CATE}"/>
 
-        <form action="Admin?Action=<%=FastFoodContants.EDIT_PRODUCT%>" method="POST">
+        <form action="Admin?Action=<%=FastFoodContants.EDIT_PRODUCT%>" method="POST" onsubmit="return onSubmitForm(this);">
             <table>
                 <input type="hidden" name="<%= FastFoodContants.ID%>" value="${product.ID}" />
                 <tr>
@@ -60,6 +60,6 @@
                 </tr>
             </table>
         </form>
-        <a href="Admin?Action=<%= FastFoodContants.LIST_PRODUCT%>">Back to List</a>
+        <a href="#Admin?Action=<%= FastFoodContants.LIST_PRODUCT%>">Back to List</a>
     </body>
 </html>

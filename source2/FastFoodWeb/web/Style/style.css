@@ -1,0 +1,166 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    background: url("Image/wood-bg.jpg") repeat scroll;
+}
+#container
+{
+    margin: 0 auto;
+    width: 1000px;
+    background: #fff;
+}
+
+#header
+{
+    background: #ccc;
+    padding: 20px;
+}
+
+#header h1 { margin: 0; }
+
+#navigation
+{
+    float: left;
+    width: 1000px;
+    background: #333;
+}
+
+#navigation ul
+{
+    margin: 0;
+    padding: 0;
+}
+
+#navigation ul li
+{
+    list-style-type: none;
+    display: inline;
+}
+
+#navigation li a, .userInfo li a
+{
+    display: block;
+    padding: 5px 10px;
+    color: #fff;
+    text-decoration: none;
+}
+
+#navigation li a
+{
+    float: left;
+    border-right: 1px solid #fff;
+}
+
+.userInfo{
+    float: right;
+}
+.userInfo li a
+{
+    border-left : 1px solid #fff;
+}
+#navigation li a:hover
+{
+    background: #383;
+}
+
+#content-container
+{
+    float: left;
+    width: 1000px;
+    background: #fff;
+}
+
+#section-navigation
+{
+    float: left;
+    width: 120px;
+    padding: 20px 0;
+    margin: 0 20px;
+    display: inline;
+/*    border: violet thin solid;*/
+}
+
+#section-navigation ul
+{
+    margin: 0;
+    padding: 0;
+}
+
+#section-navigation ul li
+{
+    margin: 0 0 1em;
+    padding: 0;
+    list-style-type: none;
+}
+
+#content
+{
+    float: left;
+    width: 600px;
+    min-height: 500px;
+    padding: 0 0;
+    margin: auto;
+/*    border:blue thin solid;*/
+}
+
+#content h2 {
+    margin: 0 auto;
+}
+
+#aside
+{
+    float: right;
+    width: 200px;
+    padding: 20px 0;
+    margin: 0 20px 0 0;
+    display: inline;
+/*    border: violet thin solid;*/
+}
+
+#aside h3 { margin: 0; }
+
+#footer
+{
+    clear: left;
+    background: #ccc;
+    text-align: center;
+    padding: 20px;
+    height: 1%;
+}
+
+.product
+{
+    width: 170px;
+    height: 220px;
+    border: 2px blue solid;
+    margin: 10px 10px 10px 10px;
+}
+
+#content li{
+    display: inline-block;
+}
+
+.productImage
+{
+    width:  170px;
+    height: 170px;
+}
+#productDetail .productInfo
+{
+    margin-top: 20px;
+    float: left;
+    margin-left: 50px;
+}
+#productDetail .productImage
+{
+    float: left;
+    width: 250px;
+    height: 250px;
+}
+#productDetail .productDesc
+{
+    padding-top: 10px;
+    clear: both;
+}

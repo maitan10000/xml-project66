@@ -29,7 +29,7 @@
                         UserName:
                     </td>
                     <td>
-                        <input type="text" name="<%= FastFoodContants.USER_NAME%>" value="${userInfo.userName}" />
+                        <input type="text" name="<%= FastFoodContants.USER_NAME%>" value="" />
                     </td>
                 </tr>
                 <tr>
@@ -90,6 +90,6 @@
                 </tr>
             </table>
         </form>
-        <a href="/">Back to home</a>
+        <a href="Home.jsp">Back to home</a>
     </body>
 </html>

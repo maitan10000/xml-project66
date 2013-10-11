@@ -28,7 +28,7 @@
                         UserName:
                     </td>
                     <td>
-                        <input type="text" name="<%= FastFoodContants.USER_NAME%>" value="maitan_10000" />
+                        <input type="text" name="<%= FastFoodContants.USER_NAME%>" value="admin1" />
                     </td>
                 </tr>
                 <tr>
@@ -36,7 +36,7 @@
                         Password:
                     </td>
                     <td>
-                        <input type="text" name="<%= FastFoodContants.PASSWORD%>" value="12345" />
+                        <input type="text" name="<%= FastFoodContants.PASSWORD%>" value="admin1" />
                     </td>
                 </tr>
                 <tr>
@@ -44,7 +44,14 @@
 
                     </td>
                     <td>
-                        <input type="submit" value="Login" />
+                        <input type="submit" value="Login" />                     
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="Guest?Action=<%= FastFoodContants.REGISTER%>">Register</a>
+                    </td>
+                    <td>
                         <a href="User?Action=<%= FastFoodContants.RESET_PASS%>">Forget password</a>
                     </td>
                 </tr>

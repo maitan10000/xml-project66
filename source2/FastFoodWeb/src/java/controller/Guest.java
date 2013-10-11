@@ -11,15 +11,12 @@ import fastfood.common.bean.ProductBean;
 import fastfood.common.bean.UserBean;
 import fastfood.common.business.admin.ProductBUSImp;
 import fastfood.common.business.admin.ProductBUSInterface;
-import fastfood.common.business.admin.UserBUSImp;
-import fastfood.common.business.admin.UserBUSInterface;
 import fastfood.common.business.guest.GuestBUSImp;
 import fastfood.common.business.guest.GuestBUSInterface;
 import fastfood.common.constants.FastFoodContants;
 import fastfood.common.utility.XMLTools;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +51,10 @@ public class Guest extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = null;////response.getWriter();
+        PrintWriter out = null;////
+        if (!action.equals(FastFoodContants.PRODUCT_DETAIL)) {
+            out = response.getWriter();
+        }
         try {
             if (action.equals(FastFoodContants.PRODUCT_DETAIL)) {
                 int id = Integer.parseInt(request.getParameter(FastFoodContants.ID));

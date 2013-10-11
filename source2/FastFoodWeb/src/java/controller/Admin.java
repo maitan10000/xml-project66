@@ -119,7 +119,7 @@ public class Admin extends HttpServlet {
                 }
             } else if (action.equals(FastFoodContants.LIST_CATEGORY))//list category
             {
-                List<CategoryBean> allCategory = new CategoryBUSImp().listAll(false);
+                List<CategoryBean> allCategory = new CategoryBUSImp().listAll(true);
                 if (allCategory != null) {
                     HttpSession session = request.getSession();
                     session.setAttribute(FastFoodContants.SESSION_CATE, allCategory);
@@ -130,7 +130,7 @@ public class Admin extends HttpServlet {
                 if (ID >= 0) {
 
                     if (new CategoryBUSImp().setActive(ID, false)) {
-                        List<CategoryBean> allCategory = new CategoryBUSImp().listAll(false);
+                        List<CategoryBean> allCategory = new CategoryBUSImp().listAll(true);
                         if (allCategory != null) {
                             HttpSession session = request.getSession();
                             session.setAttribute(FastFoodContants.SESSION_CATE, allCategory);
@@ -149,6 +149,15 @@ public class Admin extends HttpServlet {
                 String serverPath = getServletContext().getRealPath("/");
                 categoryBUS.exportCategory(serverPath + "Data/categorys.xml");
                 url = AdminCategoryList;
+            } else if (action.equals(FastFoodContants.EXPORT_DATA)) {
+                //export product
+                ProductBUSInterface productBUS = new ProductBUSImp();
+                String serverPath = getServletContext().getRealPath("/");
+                productBUS.exportProduct(serverPath + "Data/products.xml");
+                //export category
+                CategoryBUSInterface categoryBUS = new CategoryBUSImp();
+                categoryBUS.exportCategory(serverPath + "Data/categorys.xml");
+                url = AdminProductList;
             }
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
@@ -215,8 +224,6 @@ public class Admin extends HttpServlet {
                     url = AdminCategoryEdit;
                 }
             }
-
-
         }
 
 
@@ -316,7 +323,7 @@ public class Admin extends HttpServlet {
         } else if (action.equals(FastFoodContants.ADD_CATEGORY)) {
             String name = request.getParameter(FastFoodContants.NAME);
             if (new CategoryBUSImp().add(name)) {
-                List<CategoryBean> category = new CategoryBUSImp().listAll(false);
+                List<CategoryBean> category = new CategoryBUSImp().listAll(true);
                 if (category != null) {
                     HttpSession session = request.getSession();
                     session.setAttribute(FastFoodContants.SESSION_CATE, category);

@@ -5,6 +5,8 @@
 package fastfood.common.utility;
 
 import fastfood.common.addtionbean.ResultBean;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -29,6 +31,7 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.sax.SAXResult;
+import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
@@ -38,7 +41,6 @@ import org.apache.fop.apps.FOUserAgent;
 import org.apache.fop.apps.Fop;
 import org.apache.fop.apps.FopFactory;
 import org.apache.fop.apps.MimeConstants;
-import org.apache.naming.factory.TransactionFactory;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -121,20 +123,29 @@ public class XMLTools {
         return result;
     }
 
-    public static void PrintPDF(String foInput, String pdfPath) {
+    public static byte[] PrintPDF(String xmlPath, String xslPath, String foPath) {
         try {
-            OutputStream ous = null;
+            //tranform xml to fo
+            TransformerFactory tf = TransformerFactory.newInstance();
+            StreamSource xsltFile = new StreamSource(xslPath);
+            Transformer trans = tf.newTransformer(xsltFile);
+
+            StreamSource xmlFile = new StreamSource(xmlPath);
+            StreamResult foFile = new StreamResult(new FileOutputStream(foPath));
+            trans.transform(xmlFile, foFile);
+
+            //create pdf from fo
             FopFactory ff = FopFactory.newInstance();
             FOUserAgent fua = ff.newFOUserAgent();
-            File pdf = new File(pdfPath);
-            ous = new FileOutputStream(pdf);
+            ByteArrayOutputStream ous = new ByteArrayOutputStream();
             Fop fop = ff.newFop(MimeConstants.MIME_PDF, fua, ous);
-            TransformerFactory tff = TransformerFactory.newInstance();
-            Transformer trans = tff.newTransformer();
-            File fo = new File(foInput);
+
+            trans = tf.newTransformer();
+            File fo = new File(foPath);
             Source src = new StreamSource(fo);
             Result result = new SAXResult(fop.getDefaultHandler());
             trans.transform(src, result);
+            return ous.toByteArray();
         } catch (TransformerException ex) {
             Logger.getLogger(XMLTools.class.getName()).log(Level.SEVERE, null, ex);
         } catch (FOPException ex) {
@@ -142,7 +153,6 @@ public class XMLTools {
         } catch (FileNotFoundException ex) {
             Logger.getLogger(XMLTools.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-
+        return null;
     }
 }

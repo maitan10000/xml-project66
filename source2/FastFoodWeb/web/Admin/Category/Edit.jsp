@@ -15,10 +15,8 @@
     </head>
     <body>
         <h1>Edit Category</h1>
-        <c:set var="category" value="${sessionScope.CATE}"/>;
-
-
-        <form action="Admin?Action=EditCategory" method="POST">
+        <c:set var="category" value="${sessionScope.CATE}"/>
+        <form action="Admin?Action=EditCategory" method="POST"  onsubmit="return onSubmitForm(this);">
             <table>
                 <input type="hidden" name="ID" value="${category.ID}" />
                 <tr>
@@ -48,6 +46,6 @@
                 </tr>
             </table>
         </form>
-        <a href="Admin?Action=ListCategory">Back to List</a>
+        <a href="#Admin?Action=ListCategory">Back to List</a>
     </body>
 </html>

@@ -20,7 +20,7 @@
         <h1>Add product</h1>
         <c:set var="cate" value="${sessionScope.CATE}"/>
 
-        <form action="Admin?Action=<%=FastFoodContants.ADD_PRODUCT%>" method="POST">
+        <form action="Admin?Action=<%=FastFoodContants.ADD_PRODUCT%>" method="POST" onsubmit="return onSubmitForm(this);">
             <table>
                 <tr>
                     <td>Name: </td>
@@ -53,6 +53,6 @@
                 </tr>
             </table>            
         </form>
-        <a href="Admin?Action=<%= FastFoodContants.LIST_PRODUCT%>">Back to List</a>
+        <a href="#Admin?Action=<%= FastFoodContants.LIST_PRODUCT%>">Back to List</a>
     </body>
 </html>

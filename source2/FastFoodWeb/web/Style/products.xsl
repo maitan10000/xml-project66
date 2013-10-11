@@ -16,21 +16,42 @@
     </xsl:template>
     <xsl:template match="ProductViews">
         <ul>
-            <xsl:for-each select="ProductView[CateID=$cateIDIn]">
-                <li>
-                    <div id="{ID}" class="product">
-                        <a href="#Action=ProductDetail&amp;ID={ID}">
-                            <img src="http://placehold.it/170x170" class="productImage"/>
-                        </a>
-                        <h4>
-                            <xsl:value-of select="Name"/>
-                        </h4>
-                        <span>Price:
-                            <xsl:value-of select="Price"/> VND
-                        </span>
-                    </div>
-                </li>
-            </xsl:for-each>
+            <xsl:choose>
+                <xsl:when test="$cateIDIn = -1">
+                    <xsl:for-each select="ProductView[position()&lt;10]">
+                        <li>
+                            <div id="{ID}" class="product">
+                                <a href="#Action=ProductDetail&amp;ID={ID}">
+                                    <img src="http://placehold.it/170x170" class="productImage"/>
+                                </a>
+                                <h4>
+                                    <xsl:value-of select="Name"/>
+                                </h4>
+                                <span>Price:
+                                    <xsl:value-of select='format-number(Price, "###,###")'/> VND
+                                </span>
+                            </div>
+                        </li>
+                    </xsl:for-each>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:for-each select="ProductView[CateID=$cateIDIn]">
+                        <li>
+                            <div id="{ID}" class="product">
+                                <a href="#Action=ProductDetail&amp;ID={ID}">
+                                    <img src="http://placehold.it/170x170" class="productImage"/>
+                                </a>
+                                <h4>
+                                    <xsl:value-of select="Name"/>
+                                </h4>
+                                <span>Price:
+                                    <xsl:value-of select='format-number(Price, "###,###")'/> VND
+                                </span>
+                            </div>
+                        </li>
+                    </xsl:for-each>
+                </xsl:otherwise>
+            </xsl:choose>
         </ul>
     </xsl:template>
 </xsl:stylesheet>

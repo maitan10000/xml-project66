@@ -12,178 +12,14 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/xml" prefix="x"%>
 <c:set var="user" value="${sessionScope.LOGIN}"/>
 
+<c:if test="${user.role == 'Admin'}">
+    <jsp:forward page="Admin/index.jsp"/>
+</c:if>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-        <style type="text/css">
-            *{
-                margin: 0;
-                padding: 0;
-            }
-            body{
-                background: url("http://zurb.com/playground/uploads/upload/upload/87/wood-bg.jpg") repeat scroll 0 0 rgba(0, 0, 0, 0);
-            }
-            #container
-            {
-                margin: 0 auto;
-                width: 1000px;
-                background: #fff;
-            }
-
-            #header
-            {
-                background: #ccc;
-                padding: 20px;
-            }
-
-            #header h1 { margin: 0; }
-
-            #navigation
-            {
-                float: left;
-                width: 1000px;
-                background: #333;
-            }
-
-            #navigation ul
-            {
-                margin: 0;
-                padding: 0;
-            }
-
-            #navigation ul li
-            {
-                list-style-type: none;
-                display: inline;
-            }
-
-            #navigation li a, .userInfo li a
-            {
-                display: block;
-                padding: 5px 10px;
-                color: #fff;
-                text-decoration: none;
-            }
-
-            #navigation li a
-            {
-                float: left;
-                border-right: 1px solid #fff;
-            }
-
-            .userInfo{
-                float: right;
-            }
-            .userInfo li a
-            {
-                border-left : 1px solid #fff;
-            }
-            #navigation li a:hover
-            {
-                background: #383;
-            }
-
-            #content-container
-            {
-                float: left;
-                width: 1000px;
-                background: #fff;
-            }
-
-            #section-navigation
-            {
-                float: left;
-                width: 120px;
-                padding: 20px 0;
-                margin: 0 20px;
-                display: inline;
-                border: violet thin solid;
-            }
-
-            #section-navigation ul
-            {
-                margin: 0;
-                padding: 0;
-            }
-
-            #section-navigation ul li
-            {
-                margin: 0 0 1em;
-                padding: 0;
-                list-style-type: none;
-            }
-
-            #content
-            {
-                float: left;
-                width: 600px;
-                min-height: 500px;
-                padding: 0 0;
-                margin: auto;
-                border:blue thin solid;                
-            }
-
-            #content h2 {
-                margin: 0 auto;
-            }
-
-            #aside
-            {
-                float: right;
-                width: 200px;
-                padding: 20px 0;
-                margin: 0 20px 0 0;
-                display: inline;
-                border: violet thin solid;
-            }
-
-            #aside h3 { margin: 0; }
-
-            #footer
-            {
-                clear: left;
-                background: #ccc;
-                text-align: center;
-                padding: 20px;
-                height: 1%;
-            }
-
-            .product
-            {
-                width: 170px;
-                height: 220px;
-                border: 2px blue solid;
-                margin: 10px 10px 10px 10px;
-            }
-
-            #content li{               
-                display: inline-block;
-            }
-
-            .productImage
-            {
-                width:  170px;
-                height: 170px;                
-            }
-            #productDetail .productInfo
-            {
-                margin-top: 20px;
-                float: left;
-                margin-left: 50px;
-            }
-            #productDetail .productImage
-            {
-                float: left;
-                width: 250px;
-                height: 250px;
-            }
-            #productDetail .productDesc
-            {
-                padding-top: 10px;
-                clear: both;
-            }
-        </style>
+        <link rel="stylesheet" type="text/css" href="Style/style.css" media="screen" />
     </head>
     <body>
         <div id="container">
@@ -206,7 +42,7 @@
                             <li><a href="#User?Action=Logout">Logout</a></li>
                         </c:when>
                         <c:otherwise>
-                            <li><a href="User?Action=Login">Login</a></li>
+                            <li><a href="#User?Action=Login">Login</a></li>
                         </c:otherwise>
                     </c:choose>
                 </ul>
@@ -217,49 +53,39 @@
                     <c:import url="Style/categorys.xsl" var="cateXSL"/>
                     <x:transform xml="${cateXML}" xslt="${cateXSL}"/>
                 </div>
-                <div id="content">
-                    <div id="productID">
-                        <img src="" class="productImage"/>
-                        <div id="productInfo" class="productInfo">
-                            <p>Name:</p>
-                            <p>Price:</p>
-                        </div>
-                    </div>
-                    <div id="productID">
-                        <img src="" class="productImage"/>
-                        <div id="productInfo" class="productInfo">
-                            <p>Name:</p>
-                            <p>Price:</p>
-                        </div>
-                    </div>
+                <div id="content">                   
                 </div>
-                <div id="aside">
-                    <h3>
-				Aside heading
-                    </h3>
-                    <p>
-				Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan.
-                    </p>
+                <div id="aside">                  
                 </div>
                 <div id="footer">
 			Copyright © Fast Food, 2013
                 </div>
             </div>
         </div>
-        <script LANGUAGE="JavaScript">
-           
+        <script  LANGUAGE="JavaScript">
             init();
+            listProductByCateID('-1');
             if(window.addEventListener) {
                 window.addEventListener('hashchange', onHashChange);
             } else {
                 window.attachEvent('onhashchange', onHashChange);
             }
-            
+
+            var warning = true;
+            window.onbeforeunload = function() {
+                if (warning) {
+                    return "You have made changes on this page that you have not yet confirmed. If you navigate away from this page you will lose your unsaved changes";
+                }
+            }
+
             function onHashChange() {
                 var hashString =  location.hash.substring(1);
                 console.log(hashString);
                 var action = getQueryVariable('Action', hashString);
-                if(action == 'ProductView')
+                if(!action)
+                {
+                    listProductByCateID('-1');
+                }else if(action == 'ProductView')
                 {
                     var cateID = getQueryVariable('cateID', hashString);
                     //console.log(cateID);
@@ -278,22 +104,22 @@
                     var cateID = respondXML.getElementsByTagName("cateID")[0].childNodes[0].nodeValue;
                     var buyCount = respondXML.getElementsByTagName("buyCount")[0].childNodes[0].nodeValue;
                     var content = '';
-                    content +='<div id="productDetail" class="productDetail">'
-                    content +='<img src="'+image+'" class="productImage"/>'
-                    content +='<div id="productInfo" class="productInfo">'
-                    content +='<h4>'+name+'</h4>'
-                    content +='Price: '+price +' VND'
-                    content +='<br>Sold: '+buyCount                                  
+                    content +='<div id="productDetail" class="productDetail">';
+                    content +='<img src="'+image+'" class="productImage"/>';
+                    content +='<div id="productInfo" class="productInfo">';
+                    content +='<h4>'+name+'</h4>';
+                    content +='Price: '+price +' VND';
+                    content +='<br>Sold: '+buyCount;
             <c:choose>
                 <c:when test="${not empty user}">
-                            content +='<form action="User?Action=BuyProduct" method="Post" onsubmit="return onSubmitForm(this);">'
-                            content +='<input type="hidden" name="ProductID" value="'+id+'"/>'
-                            content +='<br>Quantity: <input type="text" name="Quantity" value="1"/>'
-                            content +='<input type="submit" value="Buy"/>'
-                            content +='</form>'
+                            content +='<form action="User?Action=BuyProduct" method="Post" onsubmit="return onSubmitForm(this);">';
+                            content +='<input type="hidden" name="ProductID" value="'+id+'"/>';
+                            content +='<br>Quantity: <input type="text" name="Quantity" value="1"/>';
+                            content +='<input type="submit" value="Buy"/>';
+                            content +='</form>';
                 </c:when>
                 <c:otherwise>
-                            content +='<br><a href="#">Login to buy</a>'
+                            content +='<br><a href="#User?Action=Login">Login to buy</a>'
                 </c:otherwise>
             </c:choose>
                         content +='</div><div id="productDesc" class="productDesc">'
@@ -320,12 +146,12 @@
                         }
                         document.getElementById("content").innerHTML = respondText;
                     }else if(action == '<%= FastFoodContants.BUY_PRODUCT%>')
-                    {                        
+                    {
                         var productID = formSubmit.ProductID.value;
-                        var quantity = formSubmit.Quantity.value;                        
-                        CART.addItem(productID, quantity);                                                
+                        var quantity = formSubmit.Quantity.value;
+                        CART.addItem(productID, quantity);
                     }else if(action == '<%= FastFoodContants.VIEW_CART%>')
-                    {                        
+                    {
                         document.getElementById("content").innerHTML = CART.display();
                     }else if(action == '<%= FastFoodContants.EDIT_CART%>')
                     {
@@ -364,6 +190,29 @@
                         var url = 'User?Action=<%= FastFoodContants.LIST_OLD_ORDER%>';
                         var respond = XMLRequest(url,"GET", null);
                         document.getElementById("content").innerHTML = respond;
+                    }else if(action == '<%= FastFoodContants.VIEW_ORDER_DETAIL%>')
+                    {
+                        var orderID = getQueryVariable('ID', hashString);
+                        var url = 'User?Action=<%= FastFoodContants.VIEW_ORDER_DETAIL%>&ID='+orderID;
+                        var respond = XMLRequest(url,"GET", null);
+                        document.getElementById("content").innerHTML = respond;
+                    }else if(action == '<%= FastFoodContants.LOGIN%>' )
+                    {
+                        warning = false;
+                        var url = 'User?Action=Login';
+                        document.location.href= url;
+                    }
+                    else if(action == '<%= FastFoodContants.LOGOUT%>' )
+                    {
+                        var result = confirm('Are you sure you want to logout?');
+                        if(result)
+                        {
+                            warning = false;
+                            var url = 'User?Action=<%= FastFoodContants.LOGOUT%>';
+                            var respond = XMLRequest(url,"GET", null);
+                            url = 'Home.jsp';
+                            document.location.href= url;
+                        }
                     }
 
                     formSubmit = null;
@@ -374,7 +223,7 @@
                 var CART = {
                     items: [],
                     addItem: function(productID, quantity)
-                    {                       
+                    {
                         var numQu = Number(quantity);
                         if(isNaN(quantity)== true)
                         {
@@ -400,7 +249,7 @@
                     display: function()
                     {
                         var total = 0;
-                        var content = '';                       
+                        var content = '';
                         content += '<table border="1"><tr><th>ID</th><th>Name</th><th>Price</th><th>Quantiy</th><th>Total</th><th></th></tr>';
                         for(var i = 0; i<this.items.length;i++)
                         {
@@ -421,7 +270,7 @@
                         content += '</table>';
                         if(this.items.length > 0)
                         {
-                            content += '<a href="#Action=Checkout">Check out</a>';
+                            content += '<a href="#Action=Checkout">Check out</a>   ';
 
                         }
                         content += '<a href="#Action=ListOldOrder">View Old Order</a>';
@@ -451,7 +300,7 @@
                         {
                             if(this.items[i][0] != productID)
                             {
-                                itemsTemp[itemsTemp.length-1] = this.items[i];
+                                itemsTemp[itemsTemp.length] = this.items[i];
                             }
                         }
                         this.items = itemsTemp;
@@ -474,7 +323,7 @@
                         this.items = [];
                     }
                 }
-                 
+
                 //End order area
 
 
@@ -486,7 +335,7 @@
                     xmlObj = new ActiveXObject('MSXML2.DOMDocument.6.0');
                     xmlObj.async = false;
                     xmlObj.load('Data/products.xml');
-                
+
                     xsltObj=new ActiveXObject('MSXML2.FreeThreadedDOMDocument.6.0');
                     xsltObj.async = false;
                     xsltObj.load('Style/products.xsl');
@@ -495,6 +344,7 @@
                     tranFObj.stylesheet = xsltObj;
                 }
 
+                //list product
                 function listProductByCateID(cateID)
                 {
                     var objXSLTProc = tranFObj.createProcessor();
@@ -601,7 +451,7 @@
                         if (!el.name || el.disabled || type == 'submit' || type == 'reset' || type == 'file' || type == 'image') continue;
 
                         var value = (tagName == 'select') ? getSelectedOptions(el).map(function(opt){
-                            return $(opt).value;
+                            return opt.value;
                         }) : ((type == 'radio' || type == 'checkbox') && !el.checked) ? null : el.value;
 
                         if (value != null) rv = rv + "&" + encodeURIComponent(el.name) + "=" + encodeURIComponent(value);
