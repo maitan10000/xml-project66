@@ -105,6 +105,8 @@ public class Guest extends HttpServlet {
             throws ServletException, IOException {
         action = request.getParameter(FastFoodContants.ACTION);
         if (action.equals(FastFoodContants.REGISTER)) {
+            HttpSession session = request.getSession();
+            session.removeAttribute(FastFoodContants.SESSION_MSG);
             url = GuestRegister;
         } else if (action.equals(FastFoodContants.VERIFY)) {
             String token = request.getParameter(FastFoodContants.TOKEN);
@@ -117,7 +119,7 @@ public class Guest extends HttpServlet {
         processRequest(request, response);
     }
 
-    /** 
+    /**
      * Handles the HTTP <code>POST</code> method.
      * @param request servlet request
      * @param response servlet response
@@ -126,7 +128,8 @@ public class Guest extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException,
+            IOException {
         action = request.getParameter(FastFoodContants.ACTION);
         if (action.equals(FastFoodContants.REGISTER)) {
             String username = request.getParameter(FastFoodContants.USER_NAME);
@@ -160,7 +163,7 @@ public class Guest extends HttpServlet {
         processRequest(request, response);
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
      * @return a String containing servlet description
      */

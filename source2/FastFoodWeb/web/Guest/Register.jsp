@@ -109,39 +109,5 @@
             <a href="Home.jsp">Back to home</a>
         </div>
     </body>
-    <script language="javascript">
-        function validate(form)
-        {
-            if(form.id == 'Register')
-            {
-                var pss = form.Password;
-                var repss = form.RePassword;
-                var username = form.UserName;
-                var email = form.Email;
-                var address = form.Address;
-                var phone = form.Phone;
-                if(pss.value.length < 6)// 6 character required
-                {                    
-                    message('Password must at least 6 character!');
-                    pss.focus();
-                    return false;
-                }
-
-                if(pss.value != repss.value)//check confirm password
-                {
-                    message('Confirm password not match!');
-                    repss.value = '';
-                    repss.focus();
-                    return false;
-                }
-
-            }
-            return false;
-        }
-
-        function message(msgString)
-        {
-            alert(msgString);
-        }
-    </script>
+    <script src="Script/validate.js"></script>
 </html>

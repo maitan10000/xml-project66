@@ -18,7 +18,7 @@
     <body>       
         <h1>View Profile</h1>
         <c:set var="user" value="${sessionScope.LOGIN}"/>
-        <table>
+        <table class="table-profile">
             <tr>
                 <td>
                     UserName:
@@ -29,7 +29,7 @@
             </tr>
             <tr>
                 <td>
-                    FirstName:
+                    First Name:
                 </td>
                 <td>
                     ${user.firstName}
@@ -37,7 +37,7 @@
             </tr>
             <tr>
                 <td>
-                    LastName:
+                    Last Name:
                 </td>
                 <td>
                     ${user.lastName}
@@ -69,7 +69,7 @@
             </tr>
             <tr>
                 <td>
-                    CreateDate:
+                    Create Date:
                 </td>
                 <td>
                     ${user.createDate}

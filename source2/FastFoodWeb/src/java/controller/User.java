@@ -109,7 +109,9 @@ public class User extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
         } finally {
-            out.close();
+            if (out != null) {
+                out.close();
+            }
         }
     }
 
@@ -143,13 +145,9 @@ public class User extends HttpServlet {
 
         } else if (action.equals(FastFoodContants.EDIT_PROFILE)) {
             url = UserEditProfile;
-
-
         }
 
         processRequest(request, response);
-
-
     }
 
     /** 

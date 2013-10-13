@@ -28,14 +28,14 @@
             <c:if test="${not empty msg}">
                 <h3>${msg}</h3>
             </c:if>
-            <form action="User?Action=<%= FastFoodContants.LOGIN%>" method="POST">
+            <form id="Login" action="User?Action=<%= FastFoodContants.LOGIN%>" method="POST" onsubmit="return validate(this)">
                 <table>
                     <tr>
                         <td>
                             UserName:
                         </td>
                         <td>
-                            <input type="text" name="<%= FastFoodContants.USER_NAME%>" value="admin1" />
+                            <input type="text" name="<%= FastFoodContants.USER_NAME%>" value="" />
                         </td>
                     </tr>
                     <tr>
@@ -43,7 +43,7 @@
                             Password:
                         </td>
                         <td>
-                            <input type="password" name="<%= FastFoodContants.PASSWORD%>" value="admin1" />
+                            <input type="password" name="<%= FastFoodContants.PASSWORD%>" value="" />
                         </td>
                     </tr>
                     <tr>
@@ -66,4 +66,5 @@
             </form>
         </div>
     </body>
+     <script src="Script/validate.js"></script>
 </html>

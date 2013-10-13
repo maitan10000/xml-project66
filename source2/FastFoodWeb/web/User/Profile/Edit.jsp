@@ -19,8 +19,8 @@
         <h1>Edit Profile</h1>
         <c:set var="user" value="${sessionScope.LOGIN}"/>
 
-        <form action="User?Action=<%= FastFoodContants.EDIT_PROFILE%>" method="POST" onsubmit="return onSubmitForm(this);">
-            <table>
+        <form id="EditUser" action="User?Action=<%= FastFoodContants.EDIT_PROFILE%>" method="POST" onsubmit="return onSubmitForm(this);">
+            <table class="table-profile">
                 <input type="hidden" name="<%= FastFoodContants.USER_NAME%>" value="${user.userName}" />
                 <tr>
                     <td>UserName: </td>
@@ -31,11 +31,11 @@
                     <td><input type="password" name="<%= FastFoodContants.PASSWORD%>" value="${user.password}" /></td>
                 </tr>
                 <tr>
-                    <td>FirstName: </td>
+                    <td>First Name: </td>
                     <td><input type="text" name="<%= FastFoodContants.FIRST_NAME%>" value="${user.firstName}" /></td>
                 </tr>
                 <tr>
-                    <td>LastName: </td>
+                    <td>Last Name: </td>
                     <td> <input type="text" name="<%= FastFoodContants.LAST_NAME%>" value="${user.lastName}" /></td>
                 </tr>
                 <tr>
@@ -51,7 +51,7 @@
                     <td> <input type="text" name="<%= FastFoodContants.PHONE%>" value="${user.phone}" /></td>
                 </tr>
                 <tr>
-                    <td>CreateDate: </td>
+                    <td>Create Date: </td>
                     <td><span>${user.createDate}</span></td>
                 </tr>
                 <tr>

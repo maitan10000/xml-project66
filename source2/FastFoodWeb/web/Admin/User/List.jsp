@@ -14,7 +14,7 @@
 <html>
     <body>
         <h1>List User</h1>
-        <table border="1">
+        <table border="1" class="admin-table">
             <tr>
                 <th>No</th>
                 <th>Username</th>
@@ -24,7 +24,7 @@
                 <th>Address</th>
                 <th>Phone</th>
                 <th>Role</th>
-                <th>IsActive</th>
+                <th>Active</th>
                 <th></th>
             </tr>
             <c:forEach var="item" items="${sessionScope.USER}" varStatus="counter">

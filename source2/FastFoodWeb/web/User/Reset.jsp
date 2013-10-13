@@ -14,16 +14,43 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <style type="text/css">
+            #content
+            {
+                margin: auto;
+                width: 300px;
+            }
+        </style>
     </head>
     <body>
-        <h1>Reset Password</h1>
-        <c:set var="msg" value="${sessionScope.MSG}"/>
-        <c:if test="${not empty msg}">
-            <h3>${msg}</h3>
-        </c:if>
-        <form action="User?Action=Reset" method="POST">
-            UserName: <input type="text" name="<%= FastFoodContants.USER_NAME%>" value="" /><br>
-            <input type="submit" value="Get Password" />
-        </form>
+        <div id="content">
+            <h1>Reset Password</h1>
+            <c:set var="msg" value="${sessionScope.MSG}"/>
+            <c:if test="${not empty msg}">
+                <h3>${msg}</h3>
+            </c:if>
+            <form id="Reset" action="User?Action=Reset" method="POST" onsubmit="return validate(this)">
+                <table>
+                    <tr>
+                        <td>
+                            UserName:
+                        </td>
+                        <td>
+                            <input type="text" name="<%= FastFoodContants.USER_NAME%>" value="" /><br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+
+                        </td>
+                        <td>
+                            <input type="submit" value="Get Password" />
+                        </td>
+                    </tr>
+                </table>
+            </form>
+            <a href="Home.jsp">Back to home</a>
+        </div>
     </body>
+    <script src="Script/validate.js"></script>
 </html>

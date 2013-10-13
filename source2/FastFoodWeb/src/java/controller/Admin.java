@@ -75,9 +75,12 @@ public class Admin extends HttpServlet {
             if (action.equals(FastFoodContants.LIST_PRODUCT)) {
                 ProductBUSInterface productBUS = new ProductBUSImp();
                 List<ProductBean> allProduct = productBUS.listAll(true);
-                if (allProduct != null) {
+                CategoryBUSInterface categoryBUS = new CategoryBUSImp();
+                List<CategoryBean> allCategory = categoryBUS.listAll(false);
+                if (allProduct != null && allCategory != null) {
                     HttpSession session = request.getSession();
                     session.setAttribute(FastFoodContants.SESSION_PRODUCT, allProduct);
+                    session.setAttribute(FastFoodContants.SESSION_CATE, allCategory);
                     url = AdminProductList;
                 }
             } else if (action.equals(FastFoodContants.DELETE_PRODUCT))//delete product
@@ -452,7 +455,7 @@ public class Admin extends HttpServlet {
                 image = ImageIO.read(bis);
                 bis.close();
 
-                String serverPath = getServletContext().getRealPath("/"+FastFoodContants.IMAGE_PATH);
+                String serverPath = getServletContext().getRealPath("/" + FastFoodContants.IMAGE_PATH);
                 File outputfile = new File(serverPath + "/" + imageName);
                 ImageIO.write(image, "jpg", outputfile);
                 PrintWriter out = response.getWriter();

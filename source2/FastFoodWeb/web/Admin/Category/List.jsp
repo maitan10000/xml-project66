@@ -19,16 +19,14 @@
         <a href="#Admin?Action=<%= FastFoodContants.ADD_CATEGORY%>">Add</a>
         <table border="1">
             <tr>
-                <th>ID</th>
+                <th>No.</th>
                 <th>Name</th>
-                <th>IsActive</th>
                 <th></th>
             </tr>
             <c:forEach var="item" items="${sessionScope.CATE}" varStatus="counter">
                 <tr>
-                    <td>${item.ID}</td>
+                    <td>${counter.count}</td>
                     <td>${item.name}</td>
-                    <td>${item.isActive}</td>
                     <c:url var="delete" value="#Admin?Action=DeleteCategory&ID=${item.ID}" />
                     <c:url var="edit" value="#Admin?Action=EditCategory&ID=${item.ID}" />
                     <td><a href="${delete}">Delete</a>  <a href="${edit}">Edit</a></td>

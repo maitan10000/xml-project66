@@ -18,25 +18,32 @@
     <body>
         <h1>List All Product</h1>
         <a href="#Admin?Action=<%= FastFoodContants.ADD_PRODUCT%>">Add</a>
-        <table border="1">
+        <table border="1" class="admin-table">
             <tr>
-                <th>ID</th>
+                <th>No.</th>
                 <th>Name</th>
                 <th>Price</th>
                 <th>Image</th>
                 <th>Description</th>
-                <th>CateID</th>
-                <th>BuyCount</th>
+                <th>Category</th>
+                <th>Sold</th>
                 <th></th>
             </tr>
+            <c:set var="cate" value="${sessionScope.CATE}"/>
             <c:forEach var="item" items="${sessionScope.PRODUCT}" varStatus="counter">
                 <tr>
-                    <td>${item.ID}</td>
+                    <td>${counter.count}</td>
                     <td>${item.name}</td>
                     <td>${item.price}</td>
                     <td><img alt=""  style="widows: 20px; height: 20px;" src="Data/Img/${item.image}" /></td>
                     <td>${fn:substring(item.description, 0, 10)} ...</td>
-                    <td>${item.cateID}</td>
+                    <td>
+                        <c:forEach var="cateItem" items="${cate}">
+                            <c:if test="${item.cateID == cateItem.ID}">
+                                ${cateItem.name}
+                            </c:if>
+                        </c:forEach>
+                    </td>
                     <td>${item.buyCount}</td>
                     <td>
                         <a href="#Admin?Action=<%= FastFoodContants.DELETE_PRODUCT%>&ID=${item.ID}">Delete</a>
