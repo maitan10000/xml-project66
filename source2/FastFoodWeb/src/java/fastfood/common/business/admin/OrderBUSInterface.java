@@ -24,4 +24,6 @@ public interface OrderBUSInterface {
     public OrderBean getOrderByID(int orderID);
 
     public List<OrderBean> listByBuyer(String buyerName);
+
+    public List<Integer> listIDByStatus(String status);
 }

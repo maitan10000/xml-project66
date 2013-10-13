@@ -66,6 +66,8 @@ public class FastFoodContants {
     final static public String ADD_PRODUCT = "AddProduct";
     final static public String SESSION_PRODUCT = "PRODUCT";
     final static public String SESSION_CATE = "CATE";
+    final static public String UPLOAD_FILE = "UploadFile";
+    final static public String IMAGE_PATH = "Data/Img";
     //User
     final static public String LIST_USER = "ListUser";
     final static public String DELETE_USER = "DeleteUser";
@@ -73,6 +75,8 @@ public class FastFoodContants {
     final static public String SESSION_USER = "USER";
     //Order
     final static public String LIST_ORDER = "ListOrder";
+    final static public String LIST_ORDER_BY_STATUS = "ListOrderByStatus";
+    final static public String COUNT_NEW_ORDER = "CountNewOrder";
     final static public String DELETE_ORDER = "DeleteOrder";
     final static public String EDIT_ORDER = "EditOrder";
     final static public String SESSION_ORDER = "ORDER";
@@ -80,8 +84,6 @@ public class FastFoodContants {
     final static public String EXPORT_PRODUCT = "ExportProduct";
     final static public String EXPORT_CATE = "ExportCategory";
     final static public String EXPORT_DATA = "ExportData";
-
-
     /* Order status */
     final static public String STATUS_UNAPPROVED = "UNAPPROVED";
     final static public String STATUS_APPROVED = "APPROVED";

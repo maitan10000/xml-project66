@@ -187,13 +187,18 @@ public class OrderDaoImp implements OrderDaoInterface {
     }
 
     @Override
-    public List<Integer> ListAllOrderID() {
+    public List<Integer> ListAllOrderID(boolean showActiveOnly) {
         ArrayList<Integer> result = new ArrayList<Integer>();
         Connection conn = null;
         PreparedStatement pst = null;
         try {
             conn = DBUtility.makeConnection();
-            String query = "SELECT ID FROM [Order]";
+            String query = "";
+            if (showActiveOnly == true) {
+                query = "SELECT ID FROM [Order] WHERE IsActive = 'true'";
+            } else {
+                query = "SELECT ID FROM [Order]";
+            }
             pst = conn.prepareStatement(query);
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
@@ -271,6 +276,44 @@ public class OrderDaoImp implements OrderDaoInterface {
             String query = "SELECT ID FROM [Order] WHERE Creator= ?";
             pst = conn.prepareStatement(query);
             pst.setString(1, Creator);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt(FastFoodContants.ID);
+                result.add(id);
+            }
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (pst != null) {
+                    pst.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    public List<Integer> ListAllOrderByStatus(String status) {
+        ArrayList<Integer> result = new ArrayList<Integer>();
+        Connection conn = null;
+        PreparedStatement pst = null;
+        try {
+            conn = DBUtility.makeConnection();
+            String query = "";
+            query = "SELECT ID FROM [Order] WHERE IsActive = 'true' AND Status=?";
+            pst = conn.prepareStatement(query);
+            pst.setString(1, status);
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt(FastFoodContants.ID);

@@ -18,11 +18,12 @@
         <ul>
             <xsl:choose>
                 <xsl:when test="$cateIDIn = -1">
-                    <xsl:for-each select="ProductView[position()&lt;10]">
+                    <xsl:for-each select="ProductView[ (last() - position()) &lt; 9]">
+                        <xsl:sort select="position()" data-type="number" order="descending"/>
                         <li>
                             <div id="{ID}" class="product">
                                 <a href="#Action=ProductDetail&amp;ID={ID}">
-                                    <img src="http://placehold.it/170x170" class="productImage"/>
+                                    <img src="Data/Img/{Image}" class="productImage"/>
                                 </a>
                                 <h4>
                                     <xsl:value-of select="Name"/>
@@ -39,7 +40,7 @@
                         <li>
                             <div id="{ID}" class="product">
                                 <a href="#Action=ProductDetail&amp;ID={ID}">
-                                    <img src="http://placehold.it/170x170" class="productImage"/>
+                                    <img src="Data/Img/{Image}" class="productImage"/>
                                 </a>
                                 <h4>
                                     <xsl:value-of select="Name"/>

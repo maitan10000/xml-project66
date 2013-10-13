@@ -48,7 +48,7 @@ public class OrderBUSImp implements OrderBUSInterface {
      */
     public List<OrderBean> listAll(boolean showActiveOnly) {
         List<OrderBean> result = new ArrayList<OrderBean>();
-        List<Integer> allOrderID = orderDao.ListAllOrderID();
+        List<Integer> allOrderID = orderDao.ListAllOrderID(showActiveOnly);
         for (int i = 0; i < allOrderID.size(); i++) {
             result.add(orderDao.ListByOrderID(allOrderID.get(i)));
         }
@@ -66,5 +66,9 @@ public class OrderBUSImp implements OrderBUSInterface {
             result.add(orderDao.ListByOrderID(listID.get(i)));
         }
         return result;
+    }
+
+    public List<Integer> listIDByStatus(String status) {
+        return orderDao.ListAllOrderByStatus(status);
     }
 }

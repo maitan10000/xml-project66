@@ -34,7 +34,7 @@
                 <ul class="userInfo" >
                     <c:choose>
                         <c:when test="${not empty user}">
-                            <li><a href="#User?Action=NewOrder">New Order</a></li>
+                            <li><a href="#User?Action=NewOrder"><span id="newOrder">New Order (0)</span></a></li>
                             <li><a href="#User?Action=ViewProfile">${user.userName}</a></li>
                             <li><a href="#User?Action=Logout">Logout</a></li>
                         </c:when>
@@ -63,7 +63,7 @@
             </div>
         </div>
         <script  LANGUAGE="JavaScript">
-
+            setInterval(function(){checkNewOrder()},10000);
             if(window.addEventListener) {
                 window.addEventListener('hashchange', onHashChange);
             } else {
@@ -81,15 +81,7 @@
                 var hashString =  location.hash.substring(1);
                 console.log(hashString);
                 var action = getQueryVariable('Action', hashString);
-                if(!action)
-                {
-                    listProductByCateID('-1');
-                }else if(action == 'ProductView')
-                {
-                    var cateID = getQueryVariable('cateID', hashString);
-                    //console.log(cateID);
-                    listProductByCateID(cateID);
-                }else if(action == '<%= FastFoodContants.LOGOUT%>' )
+                if(action == '<%= FastFoodContants.LOGOUT%>' )
                 {
                     var result = confirm('Are you sure you want to logout?');
                     if(result)
@@ -131,10 +123,10 @@
                     var respondText = XMLRequest(url,"GET", null);
                     document.getElementById("content").innerHTML = respondText;
                 }else if(action == '<%= FastFoodContants.EDIT_USER%>')
-                {                  
+                {
                     var url = 'Admin?Action=<%= FastFoodContants.EDIT_USER%>';
                     if(formSubmit == null)
-                    {                   
+                    {
                         var userID = getQueryVariable('UserName', hashString);
                         url += '&UserName='+userID;
                         var respondText = XMLRequest(url,"GET", null);
@@ -142,11 +134,11 @@
                     {
                         var post = serializeToQueryString(formSubmit);
                         var respondText = XMLRequest(url,"POST", post);
-                    }                    
+                    }
                     document.getElementById("content").innerHTML = respondText;
                 }else if(action == '<%= FastFoodContants.LIST_CATEGORY%>')
                 {
-                    var url = 'Admin?Action=<%= FastFoodContants.LIST_CATEGORY%>';                    
+                    var url = 'Admin?Action=<%= FastFoodContants.LIST_CATEGORY%>';
                     var respondText = XMLRequest(url,"GET", null);
                     document.getElementById("content").innerHTML = respondText;
                 }else if(action == '<%= FastFoodContants.EDIT_CATEGORY%>')
@@ -194,24 +186,28 @@
                         var ID = getQueryVariable('ID', hashString);
                         url += '&ID='+ID;
                         var respondText = XMLRequest(url,"GET", null);
+                        document.getElementById("content").innerHTML = respondText;
+                        UploadImage();
                     }else
                     {
                         var post = serializeToQueryString(formSubmit);
                         var respondText = XMLRequest(url,"POST", post);
-                    }
-                    document.getElementById("content").innerHTML = respondText;
+                        document.getElementById("content").innerHTML = respondText;
+                    }                   
                 }else if(action == '<%= FastFoodContants.ADD_PRODUCT%>')
                 {
                     var url = 'Admin?Action=<%= FastFoodContants.ADD_PRODUCT%>';
                     if(formSubmit == null)
                     {
                         var respondText = XMLRequest(url,"GET", null);
+                        document.getElementById("content").innerHTML = respondText;
+                        UploadImage();
                     }else
                     {
                         var post = serializeToQueryString(formSubmit);
                         var respondText = XMLRequest(url,"POST", post);
+                        document.getElementById("content").innerHTML = respondText;
                     }
-                    document.getElementById("content").innerHTML = respondText;
                 }else if(action == '<%= FastFoodContants.DELETE_PRODUCT%>')
                 {
                     var ID = getQueryVariable('ID', hashString);
@@ -222,13 +218,126 @@
                 {
                     var url = 'Admin?Action=<%= FastFoodContants.EXPORT_DATA%>';
                     var respondText = XMLRequest(url,"GET", null);
-                    alert("Export done!");                    
+                    alert("Export done!");
+                }else if(action == '<%= FastFoodContants.LIST_ORDER%>')
+                {
+                    var url = 'Admin?Action=<%= FastFoodContants.LIST_ORDER%>';
+                    var respondText = XMLRequest(url,"GET", null);
+                    document.getElementById("content").innerHTML = respondText;
+                }else if(action == '<%= FastFoodContants.DELETE_ORDER%>' )
+                {
+                    var ID = getQueryVariable('ID', hashString);
+                    var url = 'Admin?Action=<%= FastFoodContants.DELETE_ORDER%>&ID='+ID;
+                    var respondText = XMLRequest(url,"GET", null);
+                    document.getElementById("content").innerHTML = respondText;
+                }else if(action == '<%= FastFoodContants.VIEW_ORDER_DETAIL%>')
+                {
+                    var ID = getQueryVariable('ID', hashString);
+                    var url = 'Admin?Action=<%= FastFoodContants.VIEW_ORDER_DETAIL%>&ID='+ID;
+                    var respondText = XMLRequest(url,"GET", null);
+                    document.getElementById("content").innerHTML = respondText;
+                }else if(action == '<%= FastFoodContants.PRINT_PDF%>')
+                {
+                    var orderID = getQueryVariable('ID', hashString);
+                    var url = 'User?Action=<%= FastFoodContants.PRINT_PDF%>&ID='+orderID;
+                    var win=window.open(url, '_blank');
+                    win.focus();
+                }
+                else if(action == '<%= FastFoodContants.EDIT_ORDER%>')
+                {
+                    var url = 'Admin?Action=<%= FastFoodContants.EDIT_ORDER%>';
+                    if(formSubmit == null)
+                    {
+                        var ID = getQueryVariable('ID', hashString);
+                        url += '&ID='+ID;
+                        var respondText = XMLRequest(url,"GET", null);
+                    }else
+                    {
+                        var post = serializeToQueryString(formSubmit);
+                        var respondText = XMLRequest(url,"POST", post);
+                    }
+                    document.getElementById("content").innerHTML = respondText;
+                }else if(action == 'NewOrder')
+                {
+                    var url = 'Admin?Action=<%= FastFoodContants.LIST_ORDER_BY_STATUS%>&Status=UNAPPROVED';
+                    var respondText = XMLRequest(url,"GET", null);
+                    document.getElementById("content").innerHTML = respondText;
                 }
 
                 formSubmit = null;
                 location.hash = '#Action=Done';
             }
+            
+            //upload image
+            function UploadImage()
+            {
+                document.querySelector('form input[type=file]').addEventListener('change', function(event){
+                    // Read files
+                    var files = event.target.files;
+                    // Iterate through files
+                    for (var i = 0; i < files.length; i++) {
+                        // Ensure it's an image
+                        if (files[i].type.match(/image.*/)) {
+                            var fileName = files[i].name;
+                            // Load image
+                            var reader = new FileReader();
+                            reader.onload = function (readerEvent) {
+                                var image = new Image();
+                                image.onload = function (imageEvent) {                                   
+                                    // Resize image
+                                    var canvas = document.createElement('canvas'),
+                                    max_size = 250,
+                                    width = image.width,
+                                    height = image.height;
+                                    if (width > height) {
+                                        if (width > max_size) {
+                                            height *= max_size / width;
+                                            width = max_size;
+                                        }
+                                    } else {
+                                        if (height > max_size) {
+                                            width *= max_size / height;
+                                            height = max_size;
+                                        }
+                                    }
+                                    canvas.width = width;
+                                    canvas.height = height;
+                                    canvas.getContext('2d').drawImage(image, 0, 0, width, height);
 
+                                    // Upload image                                    
+                                    var url = 'Admin?Action=<%= FastFoodContants.UPLOAD_FILE%>';
+                                    var post = 'Image='+encodeURIComponent(canvas.toDataURL('image/jpeg'))+'&Name='+fileName;
+                                    var respond = XMLRequest(url, "POST", post);
+                                    console.log(respond);
+                                    document.getElementById("image-link").value = respond;
+                                    document.getElementById("upload-image").src = 'Data/Img/'+respond;
+                                }
+                                image.src = readerEvent.target.result;
+                            }
+                            reader.readAsDataURL(files[i]);
+                        }
+                    }
+                    // Clear files
+                    event.target.value = '';
+                });
+            }
+            //end upload image
+
+            //check new order
+            function checkNewOrder()
+            {
+                var url = 'Admin?Action=<%= FastFoodContants.COUNT_NEW_ORDER%>&Status=UNAPPROVED';
+                var respondText = XMLRequest(url,"GET", null);
+                document.getElementById("newOrder").innerHTML = "New Order("+respondText+")";
+                if(respondText >0)
+                {
+                    document.getElementById("newOrder").innerHTML = "New Order ("+respondText+")";
+                    document.getElementById("newOrder").className = "newOrder";
+                }else
+                {
+                    document.getElementById("newOrder").className = "";
+                }
+            }
 
             //Addtion function
             function getQueryVariable(variable, hashString) {

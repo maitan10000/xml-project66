@@ -14,48 +14,56 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <style type="text/css">
+            #content{
+                margin: auto;
+                width: 300px;
+            }
+        </style>
     </head>
     <body>
-        <h1>Login Page</h1>
-        <c:set var="msg" value="${sessionScope.MSG}"/>
-        <c:if test="${not empty msg}">
-            <h3>${msg}</h3>
-        </c:if>
-        <form action="User?Action=<%= FastFoodContants.LOGIN%>" method="POST">
-            <table>
-                <tr>
-                    <td>
-                        UserName:
-                    </td>
-                    <td>
-                        <input type="text" name="<%= FastFoodContants.USER_NAME%>" value="admin1" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Password:
-                    </td>
-                    <td>
-                        <input type="text" name="<%= FastFoodContants.PASSWORD%>" value="admin1" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
+        <div id="content">
+            <h1>Login Page</h1>
+            <c:set var="msg" value="${sessionScope.MSG}"/>
+            <c:if test="${not empty msg}">
+                <h3>${msg}</h3>
+            </c:if>
+            <form action="User?Action=<%= FastFoodContants.LOGIN%>" method="POST">
+                <table>
+                    <tr>
+                        <td>
+                            UserName:
+                        </td>
+                        <td>
+                            <input type="text" name="<%= FastFoodContants.USER_NAME%>" value="admin1" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Password:
+                        </td>
+                        <td>
+                            <input type="password" name="<%= FastFoodContants.PASSWORD%>" value="admin1" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
 
-                    </td>
-                    <td>
-                        <input type="submit" value="Login" />                     
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <a href="Guest?Action=<%= FastFoodContants.REGISTER%>">Register</a>
-                    </td>
-                    <td>
-                        <a href="User?Action=<%= FastFoodContants.RESET_PASS%>">Forget password</a>
-                    </td>
-                </tr>
-            </table>
-        </form>
+                        </td>
+                        <td>
+                            <input type="submit" value="Login" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="Guest?Action=<%= FastFoodContants.REGISTER%>">Register</a>
+                        </td>
+                        <td>
+                            <a href="User?Action=<%= FastFoodContants.RESET_PASS%>">Forget password</a>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
     </body>
 </html>

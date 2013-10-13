@@ -32,11 +32,19 @@
                 </tr>
                 <tr>
                     <td>Image: </td>
-                    <td> <input type="text" name="<%= FastFoodContants.IMAGE%>" value="" /></td>
+                    <td>
+                        <input id="image-link" type="hidden" name="<%= FastFoodContants.IMAGE%>" value="" />
+                        <img id="upload-image" src="" />
+                        <div id="upload-area">
+                            <form>
+                                <input type="file" name="file"/>
+                            </form>
+                        </div>
+                    </td>
                 </tr>
                 <tr>
                     <td>Desctiption: </td>
-                    <td> <textarea name="<%= FastFoodContants.DESCRIPTION%>"></textarea></td>
+                    <td> <textarea name="<%= FastFoodContants.DESCRIPTION%>" cols="80" rows="10"></textarea></td>
                 </tr>
                 <tr>
                     <td>Category: </td>

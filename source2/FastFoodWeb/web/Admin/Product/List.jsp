@@ -8,6 +8,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <html>
     <head>
@@ -33,8 +34,8 @@
                     <td>${item.ID}</td>
                     <td>${item.name}</td>
                     <td>${item.price}</td>
-                    <td>${item.image}</td>
-                    <td>${item.description}</td>
+                    <td><img alt=""  style="widows: 20px; height: 20px;" src="Data/Img/${item.image}" /></td>
+                    <td>${fn:substring(item.description, 0, 10)} ...</td>
                     <td>${item.cateID}</td>
                     <td>${item.buyCount}</td>
                     <td>

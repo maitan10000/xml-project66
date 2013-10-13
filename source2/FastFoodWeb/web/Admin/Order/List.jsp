@@ -40,7 +40,7 @@
                     <td>${item.isActive}</td>
                     <c:url var="delete" value="#Admin?Action=DeleteOrder&ID=${item.ID}" />
                     <c:url var="edit" value="#Admin?Action=EditOrder&ID=${item.ID}" />
-                    <c:url var="detail" value="#Admin?Action=DetailOrder&ID=${item.ID}" />
+                    <c:url var="detail" value="#Admin?Action=OrderDetail&ID=${item.ID}" />
                     <td>
                         <a href="${delete}">Delete</a>
                         <a href="${edit}">Edit</a>

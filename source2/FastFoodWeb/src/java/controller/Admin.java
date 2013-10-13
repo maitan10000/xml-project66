@@ -16,16 +16,24 @@ import fastfood.common.business.admin.ProductBUSImp;
 import fastfood.common.business.admin.ProductBUSInterface;
 import fastfood.common.business.admin.UserBUSImp;
 import fastfood.common.business.admin.UserBUSInterface;
+import fastfood.common.business.user.ShoppingBUSImp;
+import fastfood.common.business.user.ShoppingBUSInterface;
 import fastfood.common.constants.FastFoodContants;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
+import javax.imageio.ImageIO;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import sun.misc.BASE64Decoder;
 
 /**
  *
@@ -43,6 +51,7 @@ public class Admin extends HttpServlet {
     //Order
     final static String AdminOrderList = "Admin/Order/List.jsp";
     final static String AdminOrderEdit = "Admin/Order/Edit.jsp";
+    final static String AdminOrderDetail = "Admin/Order/Detail.jsp";
     //Category
     final static String AdminCategoryList = "Admin/Category/List.jsp";
     final static String AdminCategoryAdd = "Admin/Category/Add.jsp";
@@ -108,15 +117,6 @@ public class Admin extends HttpServlet {
                         }
                     }
                 }
-            } else if (action.equals(FastFoodContants.LIST_ORDER))//list order
-            {
-                OrderBUSInterface orderBUS = new OrderBUSImp();
-                List<OrderBean> allOrder = orderBUS.listAll(true);
-                if (allOrder != null) {
-                    HttpSession session = request.getSession();
-                    session.setAttribute(FastFoodContants.SESSION_ORDER, allOrder);
-                    url = AdminOrderList;
-                }
             } else if (action.equals(FastFoodContants.LIST_CATEGORY))//list category
             {
                 List<CategoryBean> allCategory = new CategoryBUSImp().listAll(true);
@@ -158,7 +158,66 @@ public class Admin extends HttpServlet {
                 CategoryBUSInterface categoryBUS = new CategoryBUSImp();
                 categoryBUS.exportCategory(serverPath + "Data/categorys.xml");
                 url = AdminProductList;
+            } else if (action.equals(FastFoodContants.LIST_ORDER))//list order
+            {
+                OrderBUSInterface orderBUS = new OrderBUSImp();
+                List<OrderBean> allOrder = orderBUS.listAll(true);
+                if (allOrder != null) {
+                    HttpSession session = request.getSession();
+                    session.setAttribute(FastFoodContants.SESSION_ORDER, allOrder);
+                    url = AdminOrderList;
+                }
+            } else if (action.equals(FastFoodContants.LIST_ORDER_BY_STATUS))//list order by status
+            {
+                String status = request.getParameter(FastFoodContants.STATUS);
+                OrderBUSInterface orderBUS = new OrderBUSImp();
+                List<OrderBean> allOrderTmp = orderBUS.listAll(true);
+                List<OrderBean> allOrder = new ArrayList<OrderBean>();
+                for (int i = 0; i < allOrderTmp.size(); i++) {
+                    if (allOrderTmp.get(i).getStatus().equals(status)) {
+                        allOrder.add(allOrderTmp.get(i));
+                    }
+                }
+                if (allOrder != null) {
+                    HttpSession session = request.getSession();
+                    session.setAttribute(FastFoodContants.SESSION_ORDER, allOrder);
+                    url = AdminOrderList;
+                }
+            } else if (action.equals(FastFoodContants.DELETE_ORDER)) {
+                int id = Integer.parseInt(request.getParameter(FastFoodContants.ID));
+                OrderBUSInterface orderBUS = new OrderBUSImp();
+                boolean result = orderBUS.setActive(id, false);
+                if (result == true) {
+                    //delete xml file
+                    String serverPath = getServletContext().getRealPath("/");
+                    String filePath = serverPath + "OrderXML/" + id + ".xml";
+                    File file = new File(filePath);
+                    file.delete();
+                    //list again
+                    List<OrderBean> allOrder = orderBUS.listAll(true);
+                    if (allOrder != null) {
+                        HttpSession session = request.getSession();
+                        session.setAttribute(FastFoodContants.SESSION_ORDER, allOrder);
+                        url = AdminOrderList;
+                    }
+                }
+            } else if (action.equals(FastFoodContants.VIEW_ORDER_DETAIL)) {
+                int id = Integer.parseInt(request.getParameter(FastFoodContants.ID));
+                if (id >= 0) {
+                    HttpSession session = request.getSession();
+                    session.setAttribute(FastFoodContants.SESSION_ORDER, id);
+                    url = AdminOrderDetail;
+                }
+            } else if (action.equals(FastFoodContants.COUNT_NEW_ORDER))//count new order
+            {
+                String status = request.getParameter(FastFoodContants.STATUS);
+                OrderBUSInterface orderBUS = new OrderBUSImp();
+                List<Integer> listIDNewOrder = orderBUS.listIDByStatus(status);
+                out.print(listIDNewOrder.size());
+                out.close();
+                return;
             }
+
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
         } finally {
@@ -224,6 +283,15 @@ public class Admin extends HttpServlet {
                     url = AdminCategoryEdit;
                 }
             }
+        } else if (action.equals(FastFoodContants.EDIT_ORDER)) {
+            int ID = Integer.parseInt(request.getParameter(FastFoodContants.ID));
+            if (ID >= 0) {
+                OrderBUSInterface orderBUS = new OrderBUSImp();
+                OrderBean orderBean = orderBUS.getOrderByID(ID);
+                HttpSession session = request.getSession();
+                session.setAttribute(FastFoodContants.SESSION_ORDER, orderBean);
+                url = AdminOrderEdit;
+            }
         }
 
 
@@ -241,8 +309,6 @@ public class Admin extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         action = request.getParameter(FastFoodContants.ACTION);
-
-
         if (action.equals(FastFoodContants.EDIT_PRODUCT))//edit product
         {
             int id = Integer.parseInt(request.getParameter(FastFoodContants.ID));
@@ -346,12 +412,58 @@ public class Admin extends HttpServlet {
                     url = AdminCategoryList;
                 }
             }
+        } else if (action.equals(FastFoodContants.EDIT_ORDER)) {
+            int ID = Integer.parseInt(request.getParameter(FastFoodContants.ID));
+            String status = request.getParameter(FastFoodContants.STATUS);
+            String notes = request.getParameter(FastFoodContants.NOTES);
+            HttpSession session = request.getSession();
+            UserBean creator = (UserBean) session.getAttribute(FastFoodContants.SESSION_LOGIN);
+            if (ID >= 0) {
+                OrderBUSInterface orderBUS = new OrderBUSImp();
+                OrderBean orderBean = orderBUS.getOrderByID(ID);
+                orderBean.setStatus(status);
+                orderBean.setNotes(notes);
+                orderBean.setCreator(creator.getUserName());
+                boolean result = orderBUS.update(orderBean);
+                if (result == true) {
+                    //Export to xml again
+                    String serverPath = getServletContext().getRealPath("/");
+                    ShoppingBUSInterface shoppingBUS = new ShoppingBUSImp();
+                    String filePath = serverPath + "OrderXML/" + orderBean.getID() + ".xml";
+                    shoppingBUS.exportOrderToXML(ID, filePath, true);
+                    //list order again
+                    List<OrderBean> allOrder = orderBUS.listAll(true);
+                    if (allOrder != null) {
+                        session.setAttribute(FastFoodContants.SESSION_ORDER, allOrder);
+                        url = AdminOrderList;
+                    }
+                }
+            }
+        } else if (action.equals(FastFoodContants.UPLOAD_FILE)) {
+            String imageSource = request.getParameter("Image");
+            String imageName = request.getParameter("Name");
+            try {
+                imageSource = imageSource.split("base64,")[1];
+                BufferedImage image = null;
+                byte[] imageByte;
+                BASE64Decoder decoder = new BASE64Decoder();
+                imageByte = decoder.decodeBuffer(imageSource);
+                ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
+                image = ImageIO.read(bis);
+                bis.close();
+
+                String serverPath = getServletContext().getRealPath("/"+FastFoodContants.IMAGE_PATH);
+                File outputfile = new File(serverPath + "/" + imageName);
+                ImageIO.write(image, "jpg", outputfile);
+                PrintWriter out = response.getWriter();
+                out.print(imageName);
+                out.close();
+                return;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         processRequest(request, response);
-
-
-
-
     }
 
     /** 
