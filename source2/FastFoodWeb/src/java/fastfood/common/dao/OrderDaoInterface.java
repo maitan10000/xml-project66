@@ -4,7 +4,9 @@
  */
 package fastfood.common.dao;
 
+import fastfood.common.addtionbean.OrderStaticBean;
 import fastfood.common.bean.OrderBean;
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -28,4 +30,6 @@ public interface OrderDaoInterface {
     public List<Integer> ListAllOrderByCreator(String Creator);
 
     public List<Integer> ListAllOrderByStatus(String status);
+
+    public List<OrderStaticBean> ListOrderStatic(Date from, Date to);
 }

@@ -24,8 +24,8 @@
                 <th>Creator</th>
                 <th>Status</th>
                 <th>Notes</th>
-                <th>ReceiveAddress</th>
-                <th>CreateDate</th>
+                <th>Receive Address</th>
+                <th>Create Date</th>
                 <th></th>
             </tr>
             <c:forEach var="item" items="${sessionScope.ORDER}" varStatus="counter">

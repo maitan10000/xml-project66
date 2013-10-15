@@ -25,7 +25,7 @@
         <meta property="og:image" content="http://xmltest.jelastic.servint.net/Data/Img/Main.jpg" />
         <meta property="og:site_name" content="Best Fast Food Website" />
         <meta property="og:description" content="Fast food menus online ★ Easy ordering ★  Enjoy fast food delivered to your door with Fast Food ★" />
-        
+
         <title>JSP Page</title>
         <link rel="stylesheet" type="text/css" href="Style/style.css" media="screen" />
     </head>
@@ -48,17 +48,17 @@
             <div id="navigation">
                 <ul>
                     <li><a href="#">Home</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Contact us</a></li>
+                    <li><a href="#Guest?Action=About">About us</a></li>
                 </ul>
                 <ul class="userInfo" >
                     <c:choose>
                         <c:when test="${not empty user}">
-                            <li><a href="#User?Action=ViewCart">ViewCart</a></li>
+                            <li><a href="#User?Action=ViewCart" ><span id="ViewCart">View Cart</span></a></li>
                             <li><a href="#User?Action=ViewProfile">${user.userName}</a></li>
                             <li><a href="#User?Action=Logout">Logout</a></li>
                         </c:when>
                         <c:otherwise>
+                            <li><a href="#Guest?Action=Register">Register</a></li>
                             <li><a href="#User?Action=Login">Login</a></li>
                         </c:otherwise>
                     </c:choose>
@@ -154,9 +154,14 @@
                     content +='<b>Description:</b> <p>'+description+'</p></div></div>';
                     
                     content += '<div id="comment"><div class="fb-comments" data-href="http://'+location.hostname+'/#Action=ProductDetail&ID='+id+'" data-numposts="5" data-order-by="reverse_time"></div>';
-                    document.getElementById("content").innerHTML = content;                    
-                    FB.XFBML.parse(document.getElementById("like"));
-                    FB.XFBML.parse(document.getElementById("comment"));
+                    document.getElementById("content").innerHTML = content;
+                    try{
+                        FB.XFBML.parse(document.getElementById("like"));
+                        FB.XFBML.parse(document.getElementById("comment"));
+                    }catch(e)
+                    {
+                        console.log(e);
+                    }
                 }else if(action == 'ViewProfile')
                 {
                     var url = "User?Action=ViewProfile";
@@ -211,6 +216,7 @@
                     var post = 'Order='+encodeURIComponent(orderXML)+'&ReceiveAdd='+receiveAdd;
                     var respond = XMLRequest(url,"POST", post);
                     CART.clear();//clear cart
+                    alert('Thank for order, we will call you to confirm the order within 15 minutes');
                     document.getElementById("content").innerHTML = respond;
                 }else if(action == '<%= FastFoodContants.PRINT_PDF%>')
                 {
@@ -228,13 +234,24 @@
                     var url = 'User?Action=<%= FastFoodContants.VIEW_ORDER_DETAIL%>&ID='+orderID;
                     var respond = XMLRequest(url,"GET", null);
                     document.getElementById("content").innerHTML = respond;
+                }else if(action == '<%= FastFoodContants.CANCEL_ORDER%>')
+                {
+                    var orderID = getQueryVariable('ID', hashString);
+                    var url = 'User?Action=<%= FastFoodContants.CANCEL_ORDER%>&ID='+orderID;
+                    var respond = XMLRequest(url,"GET", null);
+                    document.getElementById("content").innerHTML = respond;
+                }
+                else if(action == '<%= FastFoodContants.REGISTER%>' )
+                {
+                    warning = false;
+                    var url = 'Guest?Action=Register';
+                    document.location.href= url;
                 }else if(action == '<%= FastFoodContants.LOGIN%>' )
                 {
                     warning = false;
                     var url = 'User?Action=Login';
                     document.location.href= url;
-                }
-                else if(action == '<%= FastFoodContants.LOGOUT%>' )
+                } else if(action == '<%= FastFoodContants.LOGOUT%>' )
                 {
                     var result = confirm('Are you sure you want to logout?');
                     if(result)
@@ -245,12 +262,33 @@
                         url = 'Home.jsp';
                         document.location.href= url;
                     }
+                }else if(action == '<%= FastFoodContants.ABOUT%>' )
+                {
+                    var url = 'Data/About.html';;
+                    var respond = XMLRequest(url,"GET", null);
+                    var content = '<div id="about">'+respond+'</div>';
+                    document.getElementById("content").innerHTML = content;
                 }
 
                 formSubmit = null;
                 location.hash = '#Action=Done';
             }
 
+
+            //update viewcart info
+            function updateViewCartInfo(productCount)
+            {
+                if(productCount > 0)
+                {
+                    document.getElementById("ViewCart").innerHTML = 'View Cart('+productCount+')';
+                    document.getElementById("ViewCart").className = "ViewCart";
+                }else
+                {
+                    document.getElementById("ViewCart").innerHTML = 'View Cart(0)';
+                    document.getElementById("ViewCart").className = "";
+                }
+
+            }
             //Order area
             var CART = {
                 items: [],
@@ -268,10 +306,12 @@
                         {
                             this.items[i][1] = numQu + Number(this.items[i][1]);
                             alert('Your item was added');
+                            updateViewCartInfo(this.items.length);
                             return;
                         }
                     }
                     this.items[this.items.length] = [productID, numQu];
+                    updateViewCartInfo(this.items.length);
                     alert('Your item was added');
                 },
                 getItem: function()
@@ -285,12 +325,21 @@
                     content += '<table border="1"><tr><th>ID</th><th>Name</th><th>Price</th><th>Quantiy</th><th>Total</th><th></th></tr>';
                     for(var i = 0; i<this.items.length;i++)
                     {
-                        xmlObj.setProperty("SelectionLanguage","XPath");
                         var path = '//ProductView[ID = '+this.items[i][0]+']';
-                        var nodes=xmlObj.selectNodes(path);
-                        var productView = nodes[0];
-                        var productName = productView.childNodes[1].childNodes[0].nodeValue;
-                        var productPrice = productView.childNodes[2].childNodes[0].nodeValue;
+                        try{
+                            xmlObj.setProperty("SelectionLanguage","XPath");
+                            var nodes=xmlObj.selectNodes(path);
+                            var productView = nodes[0];
+                            var productName = productView.childNodes[1].childNodes[0].nodeValue;
+                            var productPrice = productView.childNodes[2].childNodes[0].nodeValue;
+                        }catch(e)
+                        {
+                            var nodes = xmlObj.evaluate( path, xmlObj, null, XPathResult.ANY_TYPE, null);
+                            var result=nodes.iterateNext();
+                            var productName = result.getElementsByTagName('Name')[0].innerHTML;
+                            var productPrice = result.getElementsByTagName('Price')[0].innerHTML;
+                        }                    
+                        
                         content += '<tr><td>'+this.items[i][0]+'</td><td>'+productName
                         content += '</td><td>'+productPrice + '</td><td>'+this.items[i][1];
                         content += '</td><td>'+this.items[i][1]*productPrice+'</td>';
@@ -312,7 +361,7 @@
                 {
                     if(isNaN(quantity)== true)
                     {
-                        alert('Please input integer');
+                        alert('Please input a number');
                         return;
                     }
                     for(var i = 0; i < this.items.length; i++)
@@ -320,6 +369,7 @@
                         if(this.items[i][0] == productID)
                         {
                             this.items[i][1] = quantity;
+                            updateViewCartInfo(this.items.length);
                             return true;
                         }
                     }
@@ -336,6 +386,7 @@
                         }
                     }
                     this.items = itemsTemp;
+                    updateViewCartInfo(this.items.length);
                 },
                 toXMLString: function()
                 {
@@ -353,26 +404,11 @@
                 },clear: function()
                 {
                     this.items = [];
+                    updateViewCartInfo(this.items.length);
                 }
             }
 
             //End order area
-
-            //Display result
-            function displayResult(elemntId, stringResult)
-            {
-                var element = document.getElementById(elemntId);
-                if (window.ActiveXObject)
-                {
-                    element.innerHTML = stringResult;
-                }else
-                {
-                    while(element.childNodes.length >= 1) {
-                        element.removeChild(element.firstChild);
-                    }
-                    element.appendChild(element.ownerDocument.createTextNode(stringResult));
-                }
-            }
 
             // Product View
             var xmlObj, xsltObj, tranFObj;
@@ -418,18 +454,11 @@
                 {
                     xsltProcessor=new XSLTProcessor();
                     xsltProcessor.importStylesheet(xsltObj);
-                    //xsltProcessor.setParameter(null, "cateID", cateID);
+                    xsltProcessor.setParameter(null,"cateIDIn",cateID);
                     var resultTmp = xsltProcessor.transformToFragment(xmlObj,document);
-                    //                    ser = new XMLSerializer();
-                    //                    for (x = 0; x < result.childNodes.length; x += 1) {
-                    //                        s += ser.serializeToString(resultTmp.childNodes[x]);
-                    //                    }
-                    //                    var result = ser.toString()
                     var result = new XMLSerializer().serializeToString( resultTmp );
                 }
-                //console.log(result);
-                displayResult("content", result);
-                //document.getElementById("content").innerHTML = result;
+                document.getElementById("content").innerHTML = result;
             }
             //End product view
 
@@ -437,4 +466,14 @@
     </body>
     <script src="Script/validate.js"></script>
     <script src="Script/functions.js"></script>
+    <!-- Histats.com  START  (standard)-->
+    <script type="text/javascript">document.write(unescape("%3Cscript src=%27http://s10.histats.com/js15_giftop.js%27 type=%27text/javascript%27%3E%3C/script%3E"));</script>
+    <a href="http://www.histats.com" target="_blank" title="website free tracking" ><script  type="text/javascript" >
+    try {Histats.startgif(1,2477823,4,10053,"div#histatsC {position: absolute;top:50%;left:0px;}body>div#histatsC {position: fixed;}");
+        Histats.track_hits();} catch(err){};
+        </script></a>
+    <noscript><style type="text/css">div#histatsC {position: absolute;top:50%;left:0px;}body>div#histatsC {position: fixed;}</style>
+        <a href="http://www.histats.com" alt="website free tracking" target="_blank" ><div id="histatsC"><img border="0" src="http://s4is.histats.com/stats/i/2477823.gif?2477823&103"></div></a>
+    </noscript>
+    <!-- Histats.com  END  -->
 </html>

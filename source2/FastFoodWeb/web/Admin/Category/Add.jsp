@@ -16,18 +16,19 @@
     </head>
     <body>
         <h1>Add Cate</h1>
-    <form action="Admin?Action=AddCategory" method="POST"  onsubmit="return onSubmitForm(this);">
-        <table>       
-            <tr>
-                <td>Name: </td>
-                <td> <input type="text" name="Name" value="" /></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td> <input type="submit" value="Add" /></td>
-            </tr>
-        </table>
-        <a href="#Admin?Action=ListCategory">Back to List</a>
-    </form>
-</body>
+        <form id="Cate-Add" action="Admin?Action=AddCategory" method="POST"  onsubmit="return onSubmitForm(this);">
+            <table class="ae-table">
+                <tr>
+                    <td>Name<span class="require">*</span>: </td>
+                    <td> <input type="text" name="Name" value="" /></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td> <input type="submit" value="Add" /></td>
+                </tr>
+            </table>
+            <span class="require">*: require fields</span><br/>
+            <a href="#Admin?Action=ListCategory">Back to List</a>
+        </form>
+    </body>
 </html>

@@ -4,7 +4,9 @@
  */
 package fastfood.common.business.admin;
 
+import fastfood.common.addtionbean.OrderStaticBean;
 import fastfood.common.bean.OrderBean;
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -26,4 +28,6 @@ public interface OrderBUSInterface {
     public List<OrderBean> listByBuyer(String buyerName);
 
     public List<Integer> listIDByStatus(String status);
+
+    public List<OrderStaticBean> listOrderStatic(Date from, Date to);
 }

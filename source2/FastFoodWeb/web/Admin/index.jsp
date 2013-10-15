@@ -28,8 +28,7 @@
             <div id="navigation">
                 <ul>
                     <li><a href="#">Home</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Contact us</a></li>
+                    <li><a href="#">About us</a></li>
                 </ul>
                 <ul class="userInfo" >
                     <c:choose>
@@ -47,11 +46,13 @@
             <div id="content-container">
                 <div id="section-navigation">
                     <ul>
+                        <li><a href="#Admin?Action=About">Change About Us</a></li>
                         <li><a href="#Admin?Action=ListUser">User Manage</a></li>
                         <li><a href="#Admin?Action=ListCategory">Category Manage</a></li>
                         <li><a href="#Admin?Action=ListProduct">Product Manage</a></li>
                         <li><a href="#Admin?Action=ListOrder">Order Manage</a></li>
-                        <li><a href="#Admin?Action=ExportData">Export Data</a></li>
+                        <li><a href="#Admin?Action=ExportData">Export Data</a></li>                        
+                        <li><a href="#Admin?Action=StaticOrder">Static</a></li>
                     </ul>
                 </div>
                 <div id="content">
@@ -262,6 +263,30 @@
                     var url = 'Admin?Action=<%= FastFoodContants.LIST_ORDER_BY_STATUS%>&Status=UNAPPROVED';
                     var respondText = XMLRequest(url,"GET", null);
                     document.getElementById("content").innerHTML = respondText;
+                }else if(action == '<%= FastFoodContants.ABOUT%>')
+                {
+                    var url = 'Admin?Action=<%= FastFoodContants.ABOUT%>';
+                    if(formSubmit == null)
+                    {
+                        var respondText = XMLRequest(url,"GET", null);
+                    }else
+                    {
+                        var post = serializeToQueryString(formSubmit);
+                        var respondText = XMLRequest(url,"POST", post);
+                    }
+                    document.getElementById("content").innerHTML = respondText;
+                }else if(action == '<%= FastFoodContants.STATIC_ORDER%>')
+                {
+                    var url = 'Admin?Action=<%= FastFoodContants.STATIC_ORDER%>';
+                    if(formSubmit == null)
+                    {
+                        var respondText = XMLRequest(url,"GET", null);
+                    }else
+                    {
+                        var post = serializeToQueryString(formSubmit);
+                        var respondText = XMLRequest(url,"POST", post);
+                    }
+                    document.getElementById("content").innerHTML = respondText;
                 }
 
                 formSubmit = null;
@@ -286,23 +311,10 @@
                                 image.onload = function (imageEvent) {                                   
                                     // Resize image
                                     var canvas = document.createElement('canvas'),
-                                    max_size = 250,
-                                    width = image.width,
-                                    height = image.height;
-                                    if (width > height) {
-                                        if (width > max_size) {
-                                            height *= max_size / width;
-                                            width = max_size;
-                                        }
-                                    } else {
-                                        if (height > max_size) {
-                                            width *= max_size / height;
-                                            height = max_size;
-                                        }
-                                    }
-                                    canvas.width = width;
-                                    canvas.height = height;
-                                    canvas.getContext('2d').drawImage(image, 0, 0, width, height);
+                                    max_size = 250;
+                                    canvas.width = max_size;
+                                    canvas.height = max_size;
+                                    canvas.getContext('2d').drawImage(image, 0, 0, max_size, max_size);
 
                                     // Upload image                                    
                                     var url = 'Admin?Action=<%= FastFoodContants.UPLOAD_FILE%>';

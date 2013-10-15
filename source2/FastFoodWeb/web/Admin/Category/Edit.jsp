@@ -16,28 +16,28 @@
     <body>
         <h1>Edit Category</h1>
         <c:set var="category" value="${sessionScope.CATE}"/>
-        <form action="Admin?Action=EditCategory" method="POST"  onsubmit="return onSubmitForm(this);">
-            <table>
+        <form id="Cate-Edit" action="Admin?Action=EditCategory" method="POST"  onsubmit="return onSubmitForm(this);">
+            <table class="ae-table">
                 <input type="hidden" name="ID" value="${category.ID}" />
                 <tr>
-                    <td>Name: </td>
+                    <td>Name<span class="require">*</span>: </td>
                     <td> <input type="text" name="Name" value="${category.name}" /></td>
                 </tr>
                 <tr>
                     <td>IsActive </td>
                     <td>
-                <select name="IsActive">
-                    <c:forEach var="item" items="True,False">
-                        <c:choose>
-                            <c:when test="${category.isActive == item}">
-                                <option value="${item}" selected>${item}</option>
-                            </c:when>
-                            <c:otherwise>
-                                <option value="${item}">${item}</option>
-                            </c:otherwise>
-                        </c:choose>
-                    </c:forEach>
-                </select>
+                        <select name="IsActive">
+                            <c:forEach var="item" items="True,False">
+                                <c:choose>
+                                    <c:when test="${category.isActive == item}">
+                                        <option value="${item}" selected>${item}</option>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <option value="${item}">${item}</option>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:forEach>
+                        </select>
                     </td>
                 </tr>
                 <tr>
@@ -46,6 +46,7 @@
                 </tr>
             </table>
         </form>
+        <span class="require">*: require fields</span><br/>
         <a href="#Admin?Action=ListCategory">Back to List</a>
     </body>
 </html>

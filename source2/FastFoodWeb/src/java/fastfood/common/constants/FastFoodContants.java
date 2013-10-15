@@ -80,6 +80,8 @@ public class FastFoodContants {
     final static public String DELETE_ORDER = "DeleteOrder";
     final static public String EDIT_ORDER = "EditOrder";
     final static public String SESSION_ORDER = "ORDER";
+    final static public String STATIC_ORDER = "StaticOrder";
+    final static public String SESSION_STATIC = "STATIC";
     //Export product
     final static public String EXPORT_PRODUCT = "ExportProduct";
     final static public String EXPORT_CATE = "ExportCategory";
@@ -89,6 +91,8 @@ public class FastFoodContants {
     final static public String STATUS_APPROVED = "APPROVED";
     final static public String STATUS_DELIVERED = "DELIVERED";
     final static public String STATUS_CANCEL = "CANCEL";
+    //about
+    final static public String ABOUT = "About";
     /* Controller Guest */
     //Register
     final static public String REGISTER = "Register";
@@ -120,4 +124,5 @@ public class FastFoodContants {
     final static public String PRINT_PDF = "PrintPDF";
     final static public String LIST_OLD_ORDER = "ListOldOrder";
     final static public String VIEW_ORDER_DETAIL = "OrderDetail";
+    final static public String CANCEL_ORDER = "CancelOrder";
 }

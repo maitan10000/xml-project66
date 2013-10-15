@@ -27,8 +27,16 @@
                     <td><span>${user.userName}</span></td>
                 </tr>
                 <tr>
-                    <td>Password </td>
+                    <td>Password<span class="require">*</span>: </td>
                     <td><input type="password" name="<%= FastFoodContants.PASSWORD%>" value="${user.password}" /></td>
+                </tr>
+                <tr>
+                    <td>
+                        Confirm password<span class="require">*</span>:
+                    </td>
+                    <td>
+                        <input type="password" name="RePassword" value="${user.password}" />
+                    </td>
                 </tr>
                 <tr>
                     <td>First Name: </td>
@@ -39,15 +47,15 @@
                     <td> <input type="text" name="<%= FastFoodContants.LAST_NAME%>" value="${user.lastName}" /></td>
                 </tr>
                 <tr>
-                    <td>Email: </td>
+                    <td>Email<span class="require">*</span>: </td>
                     <td> <input type="text" name="<%= FastFoodContants.EMAIL%>" value="${user.email}" /></td>
                 </tr>
                 <tr>
-                    <td>Address: </td>
+                    <td>Address<span class="require">*</span>: </td>
                     <td> <input type="text" name="<%= FastFoodContants.ADDRESS%>" value="${user.address}" /></td>
                 </tr>
                 <tr>
-                    <td>Phone: </td>
+                    <td>Phone<span class="require">*</span>: </td>
                     <td> <input type="text" name="<%= FastFoodContants.PHONE%>" value="${user.phone}" /></td>
                 </tr>
                 <tr>
@@ -60,6 +68,7 @@
                 </tr>
             </table>
         </form>
+        <span class="require">*: require fields</span><br>
         <a href="#User?Action=<%= FastFoodContants.VIEW_PROFILE%>">Back to View</a>
     </body>
 </html>

@@ -4,6 +4,7 @@
  */
 package fastfood.common.dao;
 
+import fastfood.common.addtionbean.OrderStaticBean;
 import fastfood.common.bean.OrderBean;
 import fastfood.common.constants.FastFoodContants;
 import fastfood.common.utility.DBUtility;
@@ -318,6 +319,51 @@ public class OrderDaoImp implements OrderDaoInterface {
             while (rs.next()) {
                 int id = rs.getInt(FastFoodContants.ID);
                 result.add(id);
+            }
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (pst != null) {
+                    pst.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    public List<OrderStaticBean> ListOrderStatic(Date from, Date to) {
+        ArrayList<OrderStaticBean> result = new ArrayList<OrderStaticBean>();
+        Connection conn = null;
+        PreparedStatement pst = null;
+        try {
+            conn = DBUtility.makeConnection();
+            String query = "";
+            query = "SELECT r1.CreateDate, SUM(r2.Total) as Total FROM(SELECT *"
+                    + " FROM [Order] WHERE Status = 'DELIVERED' AND IsActive = 'true'"
+                    + " AND CreateDate >= ?	AND	CreateDate <= ?) r1,	"
+                    + "(SELECT OrderID, SUM(Price*Quantity) as Total FROM OrderDetail "
+                    + "GROUP BY OrderID) r2 WHERE r1.ID = r2.OrderID "
+                    + "GROUP BY r1.CreateDate";
+            pst = conn.prepareStatement(query);
+            pst.setDate(1, from);
+            pst.setDate(2, to);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                Date date = rs.getDate(FastFoodContants.CREATE_DATE);
+                int total = rs.getInt("Total");
+                result.add(new OrderStaticBean(date, total));
             }
             return result;
         } catch (Exception e) {

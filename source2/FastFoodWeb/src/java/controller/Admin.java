@@ -4,6 +4,7 @@
  */
 package controller;
 
+import fastfood.common.addtionbean.OrderStaticBean;
 import fastfood.common.bean.CategoryBean;
 import fastfood.common.bean.OrderBean;
 import fastfood.common.bean.ProductBean;
@@ -22,8 +23,14 @@ import fastfood.common.constants.FastFoodContants;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.AbstractCollection;
 import java.util.ArrayList;
 import java.util.List;
 import javax.imageio.ImageIO;
@@ -33,6 +40,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.apache.catalina.util.IOTools;
+import org.apache.commons.io.IOUtils;
 import sun.misc.BASE64Decoder;
 
 /**
@@ -52,10 +61,13 @@ public class Admin extends HttpServlet {
     final static String AdminOrderList = "Admin/Order/List.jsp";
     final static String AdminOrderEdit = "Admin/Order/Edit.jsp";
     final static String AdminOrderDetail = "Admin/Order/Detail.jsp";
+    final static String AdminOrderStatic = "Admin/Order/Static.jsp";
     //Category
     final static String AdminCategoryList = "Admin/Category/List.jsp";
     final static String AdminCategoryAdd = "Admin/Category/Add.jsp";
     final static String AdminCategoryEdit = "Admin/Category/Edit.jsp";
+    //about
+    final static String AdminAboutEdit = "Admin/About.jsp";
     final static String invalid = "invalid.jsp";
     static String url = invalid;
     static String action = "";
@@ -295,6 +307,23 @@ public class Admin extends HttpServlet {
                 session.setAttribute(FastFoodContants.SESSION_ORDER, orderBean);
                 url = AdminOrderEdit;
             }
+        } else if (action.equals(FastFoodContants.ABOUT)) {
+            String about = "";
+            try {
+                String serverPath = getServletContext().getRealPath("Data/About.html");
+                FileInputStream fileIS = new FileInputStream(new File(serverPath));
+                about = IOUtils.toString(fileIS, "UTF-8");
+                about = about.replaceAll("<br/>", "\n");
+            } catch (IOException e) {
+            }
+            HttpSession session = request.getSession();
+            session.setAttribute(FastFoodContants.SESSION_MSG, about);
+            url = AdminAboutEdit;
+        } else if (action.equals(FastFoodContants.STATIC_ORDER))//static
+        {
+            HttpSession session = request.getSession();
+            session.removeAttribute(FastFoodContants.SESSION_STATIC);
+            url = AdminOrderStatic;
         }
 
 
@@ -465,7 +494,32 @@ public class Admin extends HttpServlet {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        } else if (action.equals(FastFoodContants.ABOUT)) {
+            String about = request.getParameter(FastFoodContants.ABOUT);
+            about = about.replaceAll("\r\n", "<br/>");
+            about = about.replaceAll("\n", "<br/>");
+            String serverPath = getServletContext().getRealPath("Data/About.html");
+            FileOutputStream fileOS = new FileOutputStream(new File(serverPath));
+            IOUtils.write(about, fileOS);
+            return;
+        } else if (action.equals(FastFoodContants.STATIC_ORDER))//static
+        {
+            try {
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                Date from = new java.sql.Date(sdf.parse(request.getParameter("from")).getTime());
+                Date to = new java.sql.Date(sdf.parse(request.getParameter("to")).getTime());
+                OrderBUSInterface orderBUS = new OrderBUSImp();
+
+                List<OrderStaticBean> orderStaticBean = orderBUS.listOrderStatic(from, to);
+                if (orderStaticBean != null) {
+                    HttpSession session = request.getSession();
+                    session.setAttribute(FastFoodContants.SESSION_STATIC, orderStaticBean);
+                    url = AdminOrderStatic;
+                }
+            } catch (Exception e) {
+            }
         }
+
         processRequest(request, response);
     }
 

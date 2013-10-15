@@ -5,6 +5,10 @@
 body{
     background: url("Image/wood-bg.jpg") repeat scroll;
 }
+img {
+    border:none;
+}
+
 #container
 {
     margin: 0 auto;
@@ -147,6 +151,23 @@ body{
     width:  170px;
     height: 170px;
 }
+.Image-effect
+{
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+.Image-effect:hover
+{
+    border-radius: 50%;
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    transform: rotate(360deg);
+}
 #productDetail .productInfo
 {
     margin-top: 20px;
@@ -220,4 +241,26 @@ table tbody tr:hover td
 {
     border: none;
     width: 300px;
+}
+.ae-table{
+    border: none;
+}
+
+.ae-table tr:hover td
+{
+}
+
+.require{
+    color: red;
+}
+.ViewCart
+{
+    color: red;
+}
+#about
+{
+    margin-top: 50px;
+    font-style: italic;
+    font-size: large;
+    text-align: center;
 }

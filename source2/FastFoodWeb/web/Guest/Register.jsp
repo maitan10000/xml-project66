@@ -20,6 +20,9 @@
                 margin: auto;
                 width: 400px;
             }
+            .require{
+                color: red;
+            }
         </style>
     </head>
     <body>
@@ -34,7 +37,7 @@
                 <table>
                     <tr>
                         <td>
-                            UserName:
+                            UserName<span class="require">*</span>:
                         </td>
                         <td>
                             <input type="text" name="<%= FastFoodContants.USER_NAME%>" value="" />
@@ -42,7 +45,7 @@
                     </tr>
                     <tr>
                         <td>
-                            Password:
+                            Password<span class="require">*</span>:
                         </td>
                         <td>
                             <input type="password" name="<%= FastFoodContants.PASSWORD%>" value="" />
@@ -50,7 +53,7 @@
                     </tr>
                     <tr>
                         <td>
-                            Confirm password:
+                            Confirm password<span class="require">*</span>:
                         </td>
                         <td>
                             <input type="password" name="RePassword" value="" />
@@ -74,7 +77,7 @@
                     </tr>
                     <tr>
                         <td>
-                            Email:
+                            Email<span class="require">*</span>:
                         </td>
                         <td>
                             <input type="text" name="<%= FastFoodContants.EMAIL%>" value="" />
@@ -82,7 +85,7 @@
                     </tr>
                     <tr>
                         <td>
-                            Address:
+                            Address<span class="require">*</span>:
                         </td>
                         <td>
                             <input type="text" name="<%= FastFoodContants.ADDRESS%>" value="" />
@@ -90,7 +93,7 @@
                     </tr>
                     <tr>
                         <td>
-                            Phone:
+                            Phone<span class="require">*</span>:
                         </td>
                         <td>
                             <input type="text" name="<%= FastFoodContants.PHONE%>" value="" />
@@ -106,6 +109,7 @@
                     </tr>
                 </table>
             </form>
+            <span class="require">*: require fields</span><br/>
             <a href="Home.jsp">Back to home</a>
         </div>
     </body>

@@ -16,8 +16,8 @@
     <h1>Edit User</h1>
     <c:set var="user" value="${sessionScope.USER}"/>
 
-    <form action="Admin?Action=<%= FastFoodContants.EDIT_USER%>" method="POST" onsubmit="return onSubmitForm(this);">
-        <table>
+    <form id="Admin-EditUser" action="Admin?Action=<%= FastFoodContants.EDIT_USER%>" method="POST" onsubmit="return onSubmitForm(this);">
+        <table class="ae-table">
             <input type="hidden" name="<%= FastFoodContants.USER_NAME%>" value="${user.userName}" />
             <tr>
                 <td>UserName: </td>
@@ -32,15 +32,15 @@
                 <td> <input type="text" name="<%= FastFoodContants.LAST_NAME%>" value="${user.lastName}" /></td>
             </tr>
             <tr>
-                <td>Email: </td>
+                <td>Email<span class="require">*</span>: </td>
                 <td> <input type="text" name="<%= FastFoodContants.EMAIL%>" value="${user.email}" /></td>
             </tr>
             <tr>
-                <td>Address: </td>
+                <td>Address<span class="require">*</span>: </td>
                 <td> <input type="text" name="<%= FastFoodContants.ADDRESS%>" value="${user.address}" /></td>
             </tr>
             <tr>
-                <td>Phone: </td>
+                <td>Phone<span class="require">*</span>: </td>
                 <td> <input type="text" name="<%= FastFoodContants.PHONE%>" value="${user.phone}" /></td>
             </tr>
             <tr>
@@ -82,6 +82,7 @@
                 <td> <input type="submit" value="Save" /></td>
             </tr>
         </table>
+        <span class="require">*: required fields</span><br/>
     </form>
     <a href="#Admin?Action=<%= FastFoodContants.LIST_USER%>">Back to List</a>
 

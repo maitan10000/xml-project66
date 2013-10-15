@@ -74,6 +74,7 @@ public class User extends HttpServlet {
                 byte[] result = XMLTools.PrintPDF(xmlPath, xslPath, foPath);
                 if (result != null) {
                     response.setContentType("application/pdf");
+                    response.setHeader("Content-Disposition", "inline; filename=order.pdf");
                     response.setContentLength(result.length);
                     response.getOutputStream().write(result);
                     response.getOutputStream().flush();
@@ -86,6 +87,23 @@ public class User extends HttpServlet {
                 List<OrderBean> listOrder = orderBUS.listByBuyer(userBean.getUserName());
                 session.setAttribute(FastFoodContants.SESSION_ORDER, listOrder);
                 url = UserOrderList;
+            } else if (action.equals(FastFoodContants.CANCEL_ORDER))//cancel order
+            {
+                int id = Integer.parseInt(request.getParameter(FastFoodContants.ID));
+                HttpSession session = request.getSession();
+                UserBean userBean = (UserBean) session.getAttribute(FastFoodContants.SESSION_LOGIN);
+                if (id >= 0) {
+                    OrderBUSInterface orderBUS = new OrderBUSImp();
+                    OrderBean orderBean = orderBUS.getOrderByID(id);
+                    if (orderBean.getBuyerName().equals(userBean.getUserName())) {//check user
+                        if (orderBUS.updateStatus(id, FastFoodContants.STATUS_CANCEL)) {//update status
+                            //list again
+                            List<OrderBean> listOrder = orderBUS.listByBuyer(userBean.getUserName());
+                            session.setAttribute(FastFoodContants.SESSION_ORDER, listOrder);
+                            url = UserOrderList;
+                        }
+                    }
+                }
             } else if (action.equals(FastFoodContants.VIEW_ORDER_DETAIL)) {
                 int orderID = Integer.parseInt(request.getParameter(FastFoodContants.ID));
 
@@ -111,6 +129,8 @@ public class User extends HttpServlet {
         } finally {
             if (out != null) {
                 out.close();
+
+
             }
         }
     }
@@ -131,23 +151,35 @@ public class User extends HttpServlet {
         session.removeAttribute(FastFoodContants.SESSION_MSG);
 
 
+
+
         if (action.equals(FastFoodContants.LOGIN)) {
             url = UserLogin;
+
+
 
 
         } else if (action.equals(FastFoodContants.RESET_PASS)) {
             url = UserResetPass;
 
 
+
+
         } else if (action.equals(FastFoodContants.VIEW_PROFILE)) {
             url = UserViewProfile;
 
 
+
+
         } else if (action.equals(FastFoodContants.EDIT_PROFILE)) {
             url = UserEditProfile;
+
+
         }
 
         processRequest(request, response);
+
+
     }
 
     /** 
@@ -163,6 +195,8 @@ public class User extends HttpServlet {
         action = request.getParameter(FastFoodContants.ACTION);
 
 
+
+
         if (action.equals(FastFoodContants.LOGIN)) {
             String userName = request.getParameter(FastFoodContants.USER_NAME);
             String password = request.getParameter(FastFoodContants.PASSWORD);
@@ -171,18 +205,28 @@ public class User extends HttpServlet {
             HttpSession session = request.getSession();
 
 
+
+
             if (result.isSuccess() == true) {
                 UserBUSInterface userBUS = new UserBUSImp();
                 UserBean userBean = userBUS.getUserByUserName(userName);
                 session.setAttribute(FastFoodContants.SESSION_LOGIN, userBean);
+
+
                 if (userBean.getRole().equals("Admin")) {
                     url = AdminPage;
+
+
                 } else {
                     url = HomePage;
+
+
                 }
             } else {
                 session.setAttribute(FastFoodContants.SESSION_MSG, result.getMessage());
                 url = UserLogin;
+
+
             }
         } else if (action.equals(FastFoodContants.RESET_PASS)) {
             String userName = request.getParameter(FastFoodContants.USER_NAME);
@@ -191,6 +235,8 @@ public class User extends HttpServlet {
             HttpSession session = request.getSession();
             session.setAttribute(FastFoodContants.SESSION_MSG, result.getMessage());
             url = UserResetPass;
+
+
 
 
         } else if (action.equals(FastFoodContants.EDIT_PROFILE)) {
@@ -213,10 +259,14 @@ public class User extends HttpServlet {
 
 
 
+
+
             if (userBUS.update(user)) {
                 HttpSession session = request.getSession();
                 session.setAttribute(FastFoodContants.SESSION_LOGIN, user);
                 url = UserViewProfile;
+
+
 
 
             }
@@ -232,7 +282,11 @@ public class User extends HttpServlet {
 
 
 
+
+
             int orderID = shoppingBUS.checkOut(schemaFile, orderXMl, currentUser.getUserName(), receiveAdd);
+
+
 
 
             if (orderID > -1) {
@@ -242,10 +296,14 @@ public class User extends HttpServlet {
                 url = UserOrderDetail + "?ID=" + orderID;
 
 
+
+
             }
         }
 
         processRequest(request, response);
+
+
 
 
     }
@@ -257,6 +315,7 @@ public class User extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
+
 
 
     }// </editor-fold>

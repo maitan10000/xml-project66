@@ -20,14 +20,14 @@
         <h1>Add product</h1>
         <c:set var="cate" value="${sessionScope.CATE}"/>
 
-        <form action="Admin?Action=<%=FastFoodContants.ADD_PRODUCT%>" method="POST" onsubmit="return onSubmitForm(this);">
-            <table>
+        <form id="Product-Add" action="Admin?Action=<%=FastFoodContants.ADD_PRODUCT%>" method="POST" onsubmit="return onSubmitForm(this);">
+            <table class="ae-table">
                 <tr>
-                    <td>Name: </td>
+                    <td>Name<span class="require">*</span>: </td>
                     <td> <input type="text" name="<%= FastFoodContants.NAME%>" value="" /></td>
                 </tr>
                 <tr>
-                    <td>Price: </td>
+                    <td>Price<span class="require">*</span>: </td>
                     <td><input type="text" name="<%= FastFoodContants.PRICE%>" value="" /></td>
                 </tr>
                 <tr>
@@ -59,7 +59,8 @@
                     <td></td>
                     <td> <input type="submit" value="Add" /></td>
                 </tr>
-            </table>            
+            </table>
+            <span class="require">*: require fields</span><br/>
         </form>
         <a href="#Admin?Action=<%= FastFoodContants.LIST_PRODUCT%>">Back to List</a>
     </body>

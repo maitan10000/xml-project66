@@ -23,7 +23,7 @@
                         <li>
                             <div id="{ID}" class="product">
                                 <a href="#Action=ProductDetail&amp;ID={ID}">
-                                    <img src="Data/Img/{Image}" class="productImage"/>
+                                    <img src="Data/Img/{Image}" class="productImage Image-effect"/>
                                 </a>
                                 <h4>
                                     <xsl:value-of select="Name"/>
@@ -40,7 +40,7 @@
                         <li>
                             <div id="{ID}" class="product">
                                 <a href="#Action=ProductDetail&amp;ID={ID}">
-                                    <img src="Data/Img/{Image}" class="productImage"/>
+                                    <img src="Data/Img/{Image}" class="productImage Image-effect"/>
                                 </a>
                                 <h4>
                                     <xsl:value-of select="Name"/>

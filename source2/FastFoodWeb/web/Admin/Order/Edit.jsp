@@ -17,9 +17,9 @@
     <body>
         <h1>Edit Order</h1>
         <c:set var="orderBean" value="${sessionScope.ORDER}"/>
-        <form action="Admin?Action=EditOrder" method="POST" onsubmit="return onSubmitForm(this);">
+        <form id="Order-Edit" action="Admin?Action=EditOrder" method="POST" onsubmit="return onSubmitForm(this);">
             <input type="hidden" name="<%= FastFoodContants.ID%>" value="${orderBean.ID}"/>
-            <table>
+            <table class="ae-table">
                 <tr>
                     <td>
                         Status:
